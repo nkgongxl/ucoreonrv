@@ -4,7 +4,7 @@
 
    下载安装VMware，Ubuntu 18.0镜像文件，根据VMware的指引创建虚拟机。[下载](https://github.com/ring00/ucore_os_lab/tree/riscv32)ucore_os_lab_riscv-32源码，并把之拖入到虚机的/home目录下。虚机配置如下，当然硬盘可以少一点。
    
-   ![1571488078256](C:\Users\a1547\Desktop\大三上\操作系统\riscv实验\picture\1.png)
+   ![虚机配置](https://github.com/KeLee5453/os_lab_ucore_riscv32/blob/master/picture/1.png)
    
 2. ## 安装必要的依赖包
 
@@ -108,11 +108,11 @@
 
 5. ## 成功表现
 
-   ![1571494716348](C:\Users\a1547\Desktop\大三上\操作系统\riscv实验\picture\2.png)
+   ![成功界面1](https://github.com/KeLee5453/os_lab_ucore_riscv32/blob/master/picture/2.png)
 
    在lab1目录下运行`make qemu` 出现如下信息就证明配置成功
 
-   ![1571494967931](C:\Users\a1547\Desktop\大三上\操作系统\riscv实验\picture\3.png)
+   ![成功界面2](https://github.com/KeLee5453/os_lab_ucore_riscv32/blob/master/picture/3.png)
 
    
 
@@ -129,7 +129,7 @@
 
    8. 在编译内核时我出现的问题如下：
 
-      ![1571496032649](C:\Users\a1547\Desktop\大三上\操作系统\riscv实验\picture\4.png)
+      ![问题1]( https://github.com/KeLee5453/os_lab_ucore_riscv32/blob/master/picture/4.png)
 
       解决方法是：
 
@@ -139,7 +139,7 @@
 
       发现有：
 
-      ![1571496121287](C:\Users\a1547\Desktop\大三上\操作系统\riscv实验\picture\5.png)
+      ![解决](https://github.com/KeLee5453/os_lab_ucore_riscv32/blob/master/picture/5.png)
 
       那么把libmpfr.so.6与libmpfr.so.4关联起来，
 
