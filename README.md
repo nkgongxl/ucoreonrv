@@ -24,6 +24,8 @@ ucore实验迁移记录，主要记录ucore在RISC-V上运行的过程。该实�
 
 [Lab2：物理内存管理](https://github.com/KeLee5453/os_lab_ucore_riscv32/blob/master/report/Lab2%EF%BC%9A%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86.md)
 
+[Lab3：虚拟内存管理初始化](https://github.com/KeLee5453/os_lab_ucore_riscv32/blob/master/report/Lab3：虚拟内存管理初始化.md)
+
 ## source_code
 
 没有修改的实验源码
