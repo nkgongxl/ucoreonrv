@@ -33,7 +33,7 @@ ifdef USELLVM
 CC		:= clang
 CFLAGS	:= -mcmodel=medium -march=rv32ima -mabi=ilp32 -std=gnu99 -Wno-unused
 else
-CC		:= $(GCCPREFIX)gcc -g
+CC		:= $(GCCPREFIX)gcc
 CFLAGS	:= -mcmodel=medany -std=gnu99 -Wno-unused
 endif
 CFLAGS	+= -fno-builtin -Wall -O2 -nostdinc $(DEFS)
