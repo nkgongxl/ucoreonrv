@@ -366,3 +366,7 @@ schedule(void) {
 
    让`current`指向`next`；设置`lcr3`寄存器的值为`next`的页目录表的起始地址，即完成页表的切换；然后交换执行现场，即切换各个寄存器，再用`ret`返回到新进程了。
 
+## 运行结果
+
+![lab4运行结果](https://github.com/KeLee5453/os_lab_ucore_riscv32/blob/master/picture/lab4运行结果.jpg)
+

@@ -396,4 +396,83 @@ do_exit(int error_code) {
 1. 如果是内核线程则不需要回收空间
 2. 如果是用户进程，就开始回收，首先执行` lcr3(boot_cr3);`切换到内核的页表上，这样用户进程就只能在内核的虚拟地址空间上执行，因为内核权限高。如果当前进程的被调用数减一后等于0，那么就没有其他进程在使用了，就可以进行回收，先回收内存资源，调用`exit_mmap`函数释放`mm`中的`vma`描述的进程合法空间中实际分配的内存，然后把对应的页表项内容清空，最后把页表项和页目录表清空。然后调用`put_pgdir`函数释放页目录表所占用的内存。最后调用`mm_destroy`释放`vma`与`mm`的内存。把`mm`置为NULL，表示与当前进程相关的用户虚拟内存空间和对应的内存管 理成员变量所占的内核虚拟内存空间已经回收完毕；
 3. 设置进程的状态为`PROC_ZOMBIE`表示该进程要死了，等待父进程来回收资源，回收内核栈和进程控制块。当前进程的退出码为`error_code`表示该进程已经不能被调度。
-4. 
+4. 如果当前进程的父进程处于等待子进程的状态，则唤醒父进程让父进程回收资源。
+5. 如果该进程还有子进程，那么就指向第一个孩子，把后面的孩子全部置为空，然后把孩子过继给内核线程`initproc`，把子进程插入到`initproc`的孩子链表中，如果某个子进程的状态时要死的状态，并且`initproc`的状态时等待孩子的状态，则唤醒`initproc`来回收子进程的资源。
+6. 然后开启中断，执行`schedule`函数，选择新的进程执行
+
+因为父进程在`init_main`中一直循环执行`do_wait`函数。最后回收子进程的资源。
+
+### `do_wait`
+
+```c
+// do_wait - wait one OR any children with PROC_ZOMBIE state, and free memory space of kernel stack
+//         - proc struct of this child.
+// NOTE: only after do_wait function, all resources of the child proces are free.
+int
+do_wait(int pid, int *code_store) {
+    struct mm_struct *mm = current->mm;
+    if (code_store != NULL) {
+        if (!user_mem_check(mm, (uintptr_t)code_store, sizeof(int), 1)) {
+            return -E_INVAL;
+        }
+    }
+
+    struct proc_struct *proc;
+    bool intr_flag, haskid;
+repeat:
+    haskid = 0;
+    if (pid != 0) {
+        proc = find_proc(pid);
+        if (proc != NULL && proc->parent == current) {
+            haskid = 1;
+            if (proc->state == PROC_ZOMBIE) {
+                goto found;
+            }
+        }
+    }
+    else {
+        proc = current->cptr;
+        for (; proc != NULL; proc = proc->optr) {
+            haskid = 1;
+            if (proc->state == PROC_ZOMBIE) {
+                goto found;
+            }
+        }
+    }
+    if (haskid) {
+        current->state = PROC_SLEEPING;
+        current->wait_state = WT_CHILD;
+        schedule();
+        if (current->flags & PF_EXITING) {
+            do_exit(-E_KILLED);
+        }
+        goto repeat;
+    }
+    return -E_BAD_PROC;
+
+found:
+    if (proc == idleproc || proc == initproc) {
+        panic("wait idleproc or initproc.\n");
+    }
+    if (code_store != NULL) {
+        *code_store = proc->exit_code;
+    }
+    local_intr_save(intr_flag);
+    {
+        unhash_proc(proc);
+        remove_links(proc);
+    }
+    local_intr_restore(intr_flag);
+    put_kstack(proc);
+    kfree(proc);
+    return 0;
+}
+```
+
+1. 首先进行检查
+2. 若`pid`等于0，就去找对应的孩子进程，否则就任意的一个快死的孩子进程。如果此子进程的执行状态不为`PROC_ZOMBIE`，表明此子进程还没有退出，则当前进程只 好设置自己的执行状态为`PROC_SLEEPING`，睡眠原因为`WT_CHILD`（即等待子进程退 出），调用`schedule()`函数选择新的进程执行，自己睡眠等待，如果被唤醒，则重复该步骤执行；
+3. 如果此子进程的执行状态为`PROC_ZOMBIE`，表明此子进程处于退出状态，需要当前进程 （即子进程的父进程）完成对子进程的最终回收工作，即首先把子进程控制块从两个进程队列`proc_list`和`hash_list`中删除，并释放子进程的内核堆栈和进程控制块。自此，子进程才彻底 地结束了它的执行过程，消除了它所占用的所有资源。
+
+## 实验结果
+
+![lab5运行结果](https://github.com/KeLee5453/os_lab_ucore_riscv32/blob/master/picture/lab5%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.jpg)
