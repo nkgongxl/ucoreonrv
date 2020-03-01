@@ -1,7 +1,8 @@
 # 关于RISCV
 
 ## RISC-V的基本框架
-![RISC-V几种基本框架](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/About%20RISC-V/1_RISC-V%E6%A1%86%E6%9E%B6.png)
+![RISC-V几种基本框架](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/1_RISC-V%E6%A1%86%E6%9E%B6.png)
+
 （* EE指的是Execution Environment，BI指的是Binary Interface，本实验是第二种框架）
 
 ## RISC-V几个主要指令集
@@ -39,7 +40,7 @@ struct sbiret {
  ## （常规）函数调用规范
 常规规范在大多数情况下适用（包括本实验），但是对于部分拓展可能有细微差异。
 ### 几个通用寄存器的使用
-![通用寄存器在调用规范中的使用](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/About%20RISC-V/2_calling_convention_register.png)
+![通用寄存器在调用规范中的使用](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/2_calling_convention_register.png)
 
 上图表明了各个整数寄存器和浮点型寄存器在函数调用中所扮演的角色。在RISC-V的汇编语言中，既可以使用通用寄存器原本的名字（如x0,x1等），也可以使用功能名（如zero,sp等）来调用。至于saver一栏若无法理解，可以联系之后的[函数返回值](#函数返回值)思考一下。
 
@@ -51,7 +52,7 @@ RISCV是一个小端(little-endian)存储的系统，所以如果被传递的参
 
 如果一个原始数据类型(primitive type, 如int、double、boolean这种非对象的数据类型)的参数正好是两倍指针字的大小，它们在用栈传递的时候是自然对齐的。下图展示了几个C中原始数据类型在RV32和RV64中所占的大小。
 
-![C中原始数据类型在RV32和RV64中的大小](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/About%20RISC-V/3_C_data_types.png)
+![C中原始数据类型在RV32和RV64中的大小](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/3_C_data_types.png)
 
 如果用整数寄存器传递参数，所有的参数都会按顺序分别被放入一对奇偶寄存器，最低的几个位放在寄存器对的偶数寄存器中。以RV32为例，函数void foo(int, long long)第一个int参数会被放入寄存器a0传递，第二个参数long会被放入a2和a3，a1寄存器中没有被传入任何值。
 如果参数比两个指针字还大，则会被以引用的形式传递。
@@ -135,9 +136,9 @@ mideleg 	        |   控制哪些中断（异步）委托给S模式
 	在S-mode的H-mode的下的sstauts和hstatus看上去就像是一个受限版本的mstatus[6] ，也就是说大体上它们的布局是一致的，只是sstatus/hstatus会比mstatus少一些控制位：
 
 
-	![mstatus布局](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/About%20RISC-V/5_mstatus.png)
+	![mstatus布局](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/5_mstatus.png)
 	
-	![sstatus布局](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/About%20RISC-V/6_sstatus.png)
+	![sstatus布局](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/6_sstatus.png)
 	
 	mstatus寄存器记录和控制了当前hart（这个之前提到过是硬件线程）运行状态。MIE,HIE,SIE,UIE是每个相应模式下对应的interrupt-enable bits；在特权级x下运行时，xIE=1则代表该中断使能。这些位是为了保证interrupt handlers在当前特权级的原子性。为较低特权级设置的中断在更高的特权级下总是被屏蔽的，而为较高特权级设置的中断在更低特权级下总是被使能的。高特权级的代码在把控制权移交给低特权级之前可以先复位(reset)部分中断位来屏蔽一些中断。
 	为了支持嵌套式的trap(nested traps)，每个特权级x都有两段stack中断使能位和特权级。xPIE中的值记录着这个trap被触发之前的中断使能位，xPP则记录之前的特权级。xPP域只能记录比自己特权级低(编码更小)的模式，所以MPP和HPP都有两位宽，SPP只有一位宽，UPP位宽为0（也就是事实上没有这个段）。（xPP是一个WLRL 域）当一个trap由原先的特权级y陷入了特权级c，xPIE的值就应该设为yIE的值，xIE被设为0，xPP设为y。通常情况下更高级别的特权级在处理来自低级别的trap时都会屏蔽中断，在处理完trap之后会根据stack里的内容返回到触发trap的上下文中；如果没有立刻返回原来的上下文，在重新开启中断使能之前也会保存privilege stack（包括xepc,xcause,xtval和xstatus这些控制寄存器的旧值）到内存栈，所以每个stack只要一个项就好了。（显然抢占了某个中断的中断处理程序也应当在退出之前禁用中断并把这些寄存器的值恢复。）
@@ -150,18 +151,18 @@ mideleg 	        |   控制哪些中断（异步）委托给S模式
 
 - **mie & mip**
 	
-	![Machine Interrupt-pending register (MIP)](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/About%20RISC-V/7_mip.png)
+	![Machine Interrupt-pending register (MIP)](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/7_mip.png)
 
-	![Machine Interrupt-enable register (mie)](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/About%20RISC-V/8_mie.png)
+	![Machine Interrupt-enable register (mie)](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/8_mie.png)
 	    每个域中首字母H,E,S,U都很好理解，分别是代表四个特权级，后两个字母IP/IE的含义也与ip/ie相同，而第二个字母E,T,S则分别代表外部中断(external interrupts)，时间中断(timer interrupts)和软件中断(software interrupts)
 
 - **mcause & scause**\
 	mcause和scause中保留了触发中断/异常类型的编码。从图2-8可以看到mcause寄存器中最高位区分了同步软件异常和异步外部中断。具体每一类中断和异常的编码见图2-9。
 
-	![Machine cause register (mcause)](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/About%20RISC-V/9_mcause.png)
+	![Machine cause register (mcause)](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/9_mcause.png)
 
 
-	![mcause中的中断/异常编码](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/About%20RISC-V/10_mcause_encode.png)
+	![mcause中的中断/异常编码](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/10_mcause_encode.png)
 	
 	（RISCV中其实允许非对齐的LOAD/STORE指令，而上图中还会有指令不对齐的Exception主要有两个原因：1.原子内存操作要求地址对齐；2.非对其的LOAD/STORE指令对硬件有额外要求，如果用户没有实现这部分的硬件，RISCV会利用Exception以一些更小的LOAD/STORE来软件实现这个功能。）
 
@@ -169,7 +170,7 @@ mideleg 	        |   控制哪些中断（异步）委托给S模式
 	mtvec和stvec中保留着触发异常/中断时pc需要跳转到的通用中断处理函数的地址，也就是中断向量。虽然mtvec是一个可读可写的函数，但是可以被处理成一个硬件设成的只读值。mtvec和stvec的功能相似，但是二者的值却并不相同。之前提到过在本实验中由于所有的SBI接口都由ECALL触发系统调用完成，而实上ECALL将会将pc设为mtvec的值；而操作系统自行处理的中断/异常都是supervisor-mode下的中断处理函数处理，所以stvec的值指向的是那个函数的入口地址。
 
 
-	![Machine Trap-vector Base-address register (mtvec)](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/About%20RISC-V/11_mtvec.png)
+	![Machine Trap-vector Base-address register (mtvec)](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/11_mtvec.png)
 
 - **medeleg & mideleg**\
     在默认情况下，所有异常处理都是移交给M-mode处理的，但如果读者对Unix系统比较熟悉的话会知道，在Unix系统下大多数异常触发的是操作系统的异常处理程序。这种情况下M-mode的异常处理程序可以选择将控制权移交给S-mode，但是显然这个代价会很大。所以RISC-V提供了一种委派机制，让某些异常处理跳过M-mode，直接交给S-mode进行处理。
@@ -233,11 +234,11 @@ Sv32支持32位的虚拟内存地址，一共被分成4KiB个页。一个Sv32的
 Sv32的页表一共有2^10个4字节的页表项(PTE, page-table entries)。一个页表的大小应当和一个页面的大小保持一致。根页表的物理页号会被放在sptbr寄存器中。
 Sv32中PTE的格式。
 
-![Sv32](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/About%20RISC-V/12_sv32.png)
+![Sv32](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/12_sv32.png)
 
 V位代表这个页表项是否是有效的；如果它的值为0，则这个页中的其他位都失去意义，可以被任意软件随意使用。R，W，X是权限位，分别代表这个页面是可读，可写或可执行。当这三个值全为0时，这个PTE是一个指向下一级页表的指针；否则，他就是一个叶子PTE（直接指向某个页面）。可写的页面必须同时被标为可读的，所以违反了这一条的编码被保留为未来拓展使用。下图展示了PTE中权限位对应的编码：
 
-![PTE中的X/W/R位编码](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/About%20RISC-V/13_pte_encode.png)
+![PTE中的X/W/R位编码](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/13_pte_encode.png)
 
 U位决定了该页是否可以被U-mode访问（只有在U=1下是可以的）。如果sstatus中的PUM位被设0，S-mode下的软件也可以访问U=1的页面。然而通常情况下操作系统都会在PUM被置位的情况下运行，在这种情况下操作系统访问U-mode的界面是错误的。
 G位代表了这是一个全局map(global mapping)，也就是说对于所有地址空间而言这个页表项都是有效值。对于非叶子PTE，这个全局设置表明在这个页表项下级的所有页都是全局的。如果一个应当设为全局的页表没有被设为全局只会降低性能，但是把一个不该全局的页表设为全局则算一个错误。
@@ -248,7 +249,7 @@ G位代表了这是一个全局map(global mapping)，也就是说对于所有地
 这个寄存器只在支持虚拟地址的系统中存在，相当于x86中的CR3，这个寄存器中保存着根页表(root page table)的物理页号(PPN, physical page number)，也就是它的操作系统物理地址数除以4KB（右移12位），以及一个为每个地址空间ID(ASID, address space identifier)，用以区分开各个地址空间。
 
 
-![RV32 Supervisor Page-Table Base Register](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/About%20RISC-V/14_sptbr.png)
+![RV32 Supervisor Page-Table Base Register](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%96%B9%E7%9D%BF%E4%B8%BD/14_sptbr.png)
 
 操作系统物理地址的位宽是具体实现决定的（在本实验中是32bit），任何没有被实现的地址位会在sptbr中被硬件接0。也ASID的位宽也是由具体实现决定的，它甚至可能为0。ASID具体实现了多少位也是由具体实现决定的。在本实验中，sptbr一共有32位，sptbr[21:0]是PPN，sptbr[31:22]是ASID。
 之所以把ASID和PPN存在同一个CSR中是为了让这一对能够在上下文切换的时候原子性地一起改变。如果不原子性地对他们进行更改可能让切换之前的页面或者之后的页面受到污染。这种办法同样在一定程度上减少了上下文切换的代价。
