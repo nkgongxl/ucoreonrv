@@ -1,7 +1,7 @@
-# 说明
+# 仓库总体说明
 本文档基于方睿丽和张蔚的文档以及源代码，由李科，林志翔，李先铎负责整理，希望完善ucore on RISC-V 实验的所有必备内容和文档
-
-# README
+---------
+# README from 李科
 
 ucore实验迁移记录，主要记录ucore在RISC-V上运行的过程。该实验主要参考方睿丽学姐的[实验过程]( https://github.com/rllly/ucore_on_riscv_recordings)。
 
@@ -39,7 +39,7 @@ ucore实验迁移记录，主要记录ucore在RISC-V上运行的过程。该实�
 
 
 
-# 内容
+# 内容大纲 from 方睿丽 
 以下为方睿丽的ucore实验迁移记录，文档主要记录ucore在RISC-V上的运行过程与相关RISC-V特性。
 [实验源码](https://github.com/ring00/ucore_os_lab/tree/riscv32)
 
