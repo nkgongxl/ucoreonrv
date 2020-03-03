@@ -47,6 +47,8 @@
 
 ### 林志翔
 
+[Lab0](https://github.com/nkgongxl/ucoreonrv/blob/master/report/%E6%9E%97%E5%BF%97%E7%BF%94/Lab0.md)
+
 [lab](https://github.com/nkgongxl/ucoreonrv/blob/master/report/%E6%9E%97%E5%BF%97%E7%BF%94/lab.md)
 
 [lab_answer](https://github.com/nkgongxl/ucoreonrv/blob/master/report/%E6%9E%97%E5%BF%97%E7%BF%94/lab_answer.md)
