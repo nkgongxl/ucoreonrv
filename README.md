@@ -45,7 +45,7 @@
 
 [Lab5：用户进程管理](https://github.com/nkgongxl/ucoreonrv/blob/master/report/%E6%9D%8E%E7%A7%91/Lab5%EF%BC%9A%E7%94%A8%E6%88%B7%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86.md)
 
-[Lab6 ：调度器](https://github.com/nkgongxl/ucoreonrv/blob/master/report/%E6%9D%8E%E7%A7%91/Lab6%20%EF%BC%9A%E8%B0%83%E5%BA%A6%E5%99%A8.md)
+[Lab6：调度器](https://github.com/nkgongxl/ucoreonrv/blob/master/report/%E6%9D%8E%E7%A7%91/Lab6%EF%BC%9A%E8%B0%83%E5%BA%A6%E5%99%A8.md)
 
 ### 林志翔
 
