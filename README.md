@@ -47,6 +47,8 @@
 
 [Lab6：调度器](https://github.com/nkgongxl/ucoreonrv/blob/master/report/%E6%9D%8E%E7%A7%91/Lab6%EF%BC%9A%E8%B0%83%E5%BA%A6%E5%99%A8.md)
 
+[Lab7：同步互斥的设计与实现](https://github.com/nkgongxl/ucoreonrv/blob/master/report/%E6%9D%8E%E7%A7%91/Lab7%EF%BC%9A%E5%90%8C%E6%AD%A5%E4%BA%92%E6%96%A5%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0.md)
+
 ### 林志翔
 
 [Lab0](https://github.com/nkgongxl/ucoreonrv/blob/master/report/%E6%9E%97%E5%BF%97%E7%BF%94/Lab0.md)
