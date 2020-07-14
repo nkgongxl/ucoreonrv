@@ -1,8 +1,6 @@
 # Summary
 
 * [Introduction](README.md)
-
-## Lab0
 * [Lab0](Lab0/README.md)
     * [实验目的](Lab0/实验目的.md)
     * [准备知识](Lab0/准备知识.md)

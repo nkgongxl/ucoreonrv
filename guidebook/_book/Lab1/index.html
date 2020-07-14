@@ -1,14 +1,14 @@
 
 <!DOCTYPE HTML>
-<html lang="" >
+<html lang="zh-hans" >
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Lab1 · GitBook</title>
+        <title>Lab1 · uCore OS(on RISC-V32)实验指导书</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
-        
+        <meta name="author" content="KeLee">
         
         
     
@@ -17,17 +17,45 @@
     
             
                 
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
                 
             
                 
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-flexible-alerts/style.css">
                 
             
                 
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
                 
             
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-comscore/test.css">
+                
+            
         
 
     
@@ -35,18 +63,10 @@
     
         
     
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
 
         
+    
+    
     
     
     <meta name="HandheldFriendly" content="true"/>
@@ -63,6 +83,28 @@
     <link rel="prev" href="../Lab0/附录B：ucore实验参考资料.html" />
     
 
+    
+        <link rel="shortcut icon" href='../asset/img/favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../asset/img/favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="apple-touch-icon" href='../asset/img/favicon.ico'>
+    
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"nkgongxl","repo":"ucoreonrv","type":"star","count":true,"size":"small"},{"user":"KeLee5453","width":"160","type":"follow","count":true,"size":"small"}]};
+    </script>
+
     </head>
     <body>
         
@@ -71,7 +113,7 @@
         
             
 <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search" />
+    <input type="text" placeholder="输入并搜索" />
 </div>
 
             
@@ -102,14 +144,7 @@
             
         </li>
     
-
-    
-        
-        <li class="header">Lab0</li>
-        
-        
-    
-        <li class="chapter " data-level="2.1" data-path="../Lab0/">
+        <li class="chapter " data-level="1.2" data-path="../Lab0/">
             
                 <a href="../Lab0/">
             
@@ -123,7 +158,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.1.1" data-path="../Lab0/实验目的.html">
+        <li class="chapter " data-level="1.2.1" data-path="../Lab0/实验目的.html">
             
                 <a href="../Lab0/实验目的.html">
             
@@ -136,7 +171,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2" data-path="../Lab0/准备知识.html">
+        <li class="chapter " data-level="1.2.2" data-path="../Lab0/准备知识.html">
             
                 <a href="../Lab0/准备知识.html">
             
@@ -150,7 +185,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.1.2.1" data-path="../Lab0/了解OS实验.html">
+        <li class="chapter " data-level="1.2.2.1" data-path="../Lab0/了解OS实验.html">
             
                 <a href="../Lab0/了解OS实验.html">
             
@@ -163,7 +198,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.2" data-path="../Lab0/设置实验环境.html">
+        <li class="chapter " data-level="1.2.2.2" data-path="../Lab0/设置实验环境.html">
             
                 <a href="../Lab0/设置实验环境.html">
             
@@ -177,7 +212,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.1.2.2.1" data-path="../Lab0/开发OS实验的简单步骤.html">
+        <li class="chapter " data-level="1.2.2.2.1" data-path="../Lab0/开发OS实验的简单步骤.html">
             
                 <a href="../Lab0/开发OS实验的简单步骤.html">
             
@@ -190,7 +225,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.2.2" data-path="../Lab0/通过虚拟机使用Linux实验环境.html">
+        <li class="chapter " data-level="1.2.2.2.2" data-path="../Lab0/通过虚拟机使用Linux实验环境.html">
             
                 <a href="../Lab0/通过虚拟机使用Linux实验环境.html">
             
@@ -203,7 +238,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.2.3" data-path="../Lab0/安装使用Linux实验环境.html">
+        <li class="chapter " data-level="1.2.2.2.3" data-path="../Lab0/安装使用Linux实验环境.html">
             
                 <a href="../Lab0/安装使用Linux实验环境.html">
             
@@ -216,7 +251,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.2.4" data-path="../Lab0/实验中可能使用的软件.html">
+        <li class="chapter " data-level="1.2.2.2.4" data-path="../Lab0/实验中可能使用的软件.html">
             
                 <a href="../Lab0/实验中可能使用的软件.html">
             
@@ -234,7 +269,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.3" data-path="../Lab0/了解编程开发调试的基本工具.html">
+        <li class="chapter " data-level="1.2.2.3" data-path="../Lab0/了解编程开发调试的基本工具.html">
             
                 <a href="../Lab0/了解编程开发调试的基本工具.html">
             
@@ -248,7 +283,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.1.2.3.1" data-path="../Lab0/gcc的基本用法.html">
+        <li class="chapter " data-level="1.2.2.3.1" data-path="../Lab0/gcc的基本用法.html">
             
                 <a href="../Lab0/gcc的基本用法.html">
             
@@ -262,7 +297,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.1.2.3.1.1" data-path="../Lab0/编译简单的 C 程序.html">
+        <li class="chapter " data-level="1.2.2.3.1.1" data-path="../Lab0/编译简单的 C 程序.html">
             
                 <a href="../Lab0/编译简单的 C 程序.html">
             
@@ -275,7 +310,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.3.1.2" data-path="../Lab0/AT&T汇编基本语法.html">
+        <li class="chapter " data-level="1.2.2.3.1.2" data-path="../Lab0/AT&T汇编基本语法.html">
             
                 <a href="../Lab0/AT&T汇编基本语法.html">
             
@@ -288,7 +323,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.3.1.3" data-path="../Lab0/GCC基本内联汇编.html">
+        <li class="chapter " data-level="1.2.2.3.1.3" data-path="../Lab0/GCC基本内联汇编.html">
             
                 <a href="../Lab0/GCC基本内联汇编.html">
             
@@ -301,7 +336,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.3.1.4" data-path="../Lab0/GCC扩展内联汇编.html">
+        <li class="chapter " data-level="1.2.2.3.1.4" data-path="../Lab0/GCC扩展内联汇编.html">
             
                 <a href="../Lab0/GCC扩展内联汇编.html">
             
@@ -319,7 +354,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.3.2" data-path="../Lab0/make和Makefile.html">
+        <li class="chapter " data-level="1.2.2.3.2" data-path="../Lab0/make和Makefile.html">
             
                 <a href="../Lab0/make和Makefile.html">
             
@@ -332,7 +367,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.3.3" data-path="../Lab0/gdb使用.html">
+        <li class="chapter " data-level="1.2.2.3.3" data-path="../Lab0/gdb使用.html">
             
                 <a href="../Lab0/gdb使用.html">
             
@@ -345,7 +380,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.3.4" data-path="../Lab0/进一步的相关内容.html">
+        <li class="chapter " data-level="1.2.2.3.4" data-path="../Lab0/进一步的相关内容.html">
             
                 <a href="../Lab0/进一步的相关内容.html">
             
@@ -363,7 +398,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.4" data-path="../Lab0/基于硬件模拟器实现源码级调试.html">
+        <li class="chapter " data-level="1.2.2.4" data-path="../Lab0/基于硬件模拟器实现源码级调试.html">
             
                 <a href="../Lab0/基于硬件模拟器实现源码级调试.html">
             
@@ -377,7 +412,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.1.2.4.1" data-path="../Lab0/安装硬件模拟器QEMU.html">
+        <li class="chapter " data-level="1.2.2.4.1" data-path="../Lab0/安装硬件模拟器QEMU.html">
             
                 <a href="../Lab0/安装硬件模拟器QEMU.html">
             
@@ -391,7 +426,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.1.2.4.1.1" data-path="../Lab0/Linux运行环境.html">
+        <li class="chapter " data-level="1.2.2.4.1.1" data-path="../Lab0/Linux运行环境.html">
             
                 <a href="../Lab0/Linux运行环境.html">
             
@@ -404,7 +439,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.4.1.2" data-path="../Lab0/Linux环境下的源码级安装过程.html">
+        <li class="chapter " data-level="1.2.2.4.1.2" data-path="../Lab0/Linux环境下的源码级安装过程.html">
             
                 <a href="../Lab0/Linux环境下的源码级安装过程.html">
             
@@ -418,7 +453,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.1.2.4.1.2.1" data-path="../Lab0/获得并应用修改.html">
+        <li class="chapter " data-level="1.2.2.4.1.2.1" data-path="../Lab0/获得并应用修改.html">
             
                 <a href="../Lab0/获得并应用修改.html">
             
@@ -431,7 +466,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.4.1.2.2" data-path="../Lab0/配置、编译和安装.html">
+        <li class="chapter " data-level="1.2.2.4.1.2.2" data-path="../Lab0/配置、编译和安装.html">
             
                 <a href="../Lab0/配置、编译和安装.html">
             
@@ -454,7 +489,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.4.2" data-path="../Lab0/使用硬件模拟器QEMU.html">
+        <li class="chapter " data-level="1.2.2.4.2" data-path="../Lab0/使用硬件模拟器QEMU.html">
             
                 <a href="../Lab0/使用硬件模拟器QEMU.html">
             
@@ -468,7 +503,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.1.2.4.2.1" data-path="../Lab0/运行参数.html">
+        <li class="chapter " data-level="1.2.2.4.2.1" data-path="../Lab0/运行参数.html">
             
                 <a href="../Lab0/运行参数.html">
             
@@ -481,7 +516,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.4.2.2" data-path="../Lab0/常用调试命令.html">
+        <li class="chapter " data-level="1.2.2.4.2.2" data-path="../Lab0/常用调试命令.html">
             
                 <a href="../Lab0/常用调试命令.html">
             
@@ -499,7 +534,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.4.3" data-path="../Lab0/结合gdb和qemu源码级调试ucore.html">
+        <li class="chapter " data-level="1.2.2.4.3" data-path="../Lab0/结合gdb和qemu源码级调试ucore.html">
             
                 <a href="../Lab0/结合gdb和qemu源码级调试ucore.html">
             
@@ -513,7 +548,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.1.2.4.3.1" data-path="../Lab0/编译可调试的目标文件.html">
+        <li class="chapter " data-level="1.2.2.4.3.1" data-path="../Lab0/编译可调试的目标文件.html">
             
                 <a href="../Lab0/编译可调试的目标文件.html">
             
@@ -526,7 +561,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.4.3.2" data-path="../Lab0/ucore 代码编译.html">
+        <li class="chapter " data-level="1.2.2.4.3.2" data-path="../Lab0/ucore 代码编译.html">
             
                 <a href="../Lab0/ucore 代码编译.html">
             
@@ -539,7 +574,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.4.3.3" data-path="../Lab0/使用远程调试.html">
+        <li class="chapter " data-level="1.2.2.4.3.3" data-path="../Lab0/使用远程调试.html">
             
                 <a href="../Lab0/使用远程调试.html">
             
@@ -552,7 +587,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.4.3.4" data-path="../Lab0/使用gdb配置文件.html">
+        <li class="chapter " data-level="1.2.2.4.3.4" data-path="../Lab0/使用gdb配置文件.html">
             
                 <a href="../Lab0/使用gdb配置文件.html">
             
@@ -565,7 +600,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.4.3.5" data-path="../Lab0/加载调试目标.html">
+        <li class="chapter " data-level="1.2.2.4.3.5" data-path="../Lab0/加载调试目标.html">
             
                 <a href="../Lab0/加载调试目标.html">
             
@@ -578,7 +613,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.4.3.6" data-path="../Lab0/设定调试目标架构.html">
+        <li class="chapter " data-level="1.2.2.4.3.6" data-path="../Lab0/设定调试目标架构.html">
             
                 <a href="../Lab0/设定调试目标架构.html">
             
@@ -601,7 +636,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.5" data-path="../Lab0/了解处理器硬件.html">
+        <li class="chapter " data-level="1.2.2.5" data-path="../Lab0/了解处理器硬件.html">
             
                 <a href="../Lab0/了解处理器硬件.html">
             
@@ -615,7 +650,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.1.2.5.1" data-path="../Lab0/RISC-V32运行模式.html">
+        <li class="chapter " data-level="1.2.2.5.1" data-path="../Lab0/RISC-V32运行模式.html">
             
                 <a href="../Lab0/RISC-V32运行模式.html">
             
@@ -628,7 +663,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.5.2" data-path="../Lab0/RISC-V32内存架构.html">
+        <li class="chapter " data-level="1.2.2.5.2" data-path="../Lab0/RISC-V32内存架构.html">
             
                 <a href="../Lab0/RISC-V32内存架构.html">
             
@@ -641,7 +676,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.5.3" data-path="../Lab0/RISC-V32寄存器.html">
+        <li class="chapter " data-level="1.2.2.5.3" data-path="../Lab0/RISC-V32寄存器.html">
             
                 <a href="../Lab0/RISC-V32寄存器.html">
             
@@ -659,7 +694,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.6" data-path="../Lab0/了解ucore编程方法和通用数据结构.html">
+        <li class="chapter " data-level="1.2.2.6" data-path="../Lab0/了解ucore编程方法和通用数据结构.html">
             
                 <a href="../Lab0/了解ucore编程方法和通用数据结构.html">
             
@@ -673,7 +708,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.1.2.6.1" data-path="../Lab0/面向对象编程方法.html">
+        <li class="chapter " data-level="1.2.2.6.1" data-path="../Lab0/面向对象编程方法.html">
             
                 <a href="../Lab0/面向对象编程方法.html">
             
@@ -686,7 +721,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.6.2" data-path="../Lab0/通用数据结构.html">
+        <li class="chapter " data-level="1.2.2.6.2" data-path="../Lab0/通用数据结构.html">
             
                 <a href="../Lab0/通用数据结构.html">
             
@@ -700,7 +735,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.1.2.6.2.1" data-path="../Lab0/双向循环链表.html">
+        <li class="chapter " data-level="1.2.2.6.2.1" data-path="../Lab0/双向循环链表.html">
             
                 <a href="../Lab0/双向循环链表.html">
             
@@ -728,7 +763,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.3" data-path="../Lab0/附录A：ucore实验中的常用工具.html">
+        <li class="chapter " data-level="1.2.3" data-path="../Lab0/附录A：ucore实验中的常用工具.html">
             
                 <a href="../Lab0/附录A：ucore实验中的常用工具.html">
             
@@ -741,7 +776,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.4" data-path="../Lab0/附录B：ucore实验参考资料.html">
+        <li class="chapter " data-level="1.2.4" data-path="../Lab0/附录B：ucore实验参考资料.html">
             
                 <a href="../Lab0/附录B：ucore实验参考资料.html">
             
@@ -766,7 +801,7 @@
         
         
     
-        <li class="chapter active" data-level="3.1" data-path="./">
+        <li class="chapter active" data-level="2.1" data-path="./">
             
                 <a href="./">
             
@@ -780,7 +815,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="3.1.1" data-path="实验目的.html">
+        <li class="chapter " data-level="2.1.1" data-path="实验目的.html">
             
                 <a href="实验目的.html">
             
@@ -793,7 +828,7 @@
             
         </li>
     
-        <li class="chapter " data-level="3.1.2" data-path="实验内容.html">
+        <li class="chapter " data-level="2.1.2" data-path="实验内容.html">
             
                 <a href="实验内容.html">
             
@@ -818,7 +853,7 @@
         
         
     
-        <li class="chapter " data-level="4.1" data-path="../Lab2/">
+        <li class="chapter " data-level="3.1" data-path="../Lab2/">
             
                 <a href="../Lab2/">
             
@@ -832,7 +867,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="4.1.1" data-path="../Lab2/实验目的.html">
+        <li class="chapter " data-level="3.1.1" data-path="../Lab2/实验目的.html">
             
                 <a href="../Lab2/实验目的.html">
             
@@ -845,7 +880,7 @@
             
         </li>
     
-        <li class="chapter " data-level="4.1.2" data-path="../Lab2/实验内容.html">
+        <li class="chapter " data-level="3.1.2" data-path="../Lab2/实验内容.html">
             
                 <a href="../Lab2/实验内容.html">
             
@@ -870,7 +905,7 @@
         
         
     
-        <li class="chapter " data-level="5.1" data-path="../Lab3/">
+        <li class="chapter " data-level="4.1" data-path="../Lab3/">
             
                 <a href="../Lab3/">
             
@@ -884,7 +919,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="5.1.1" data-path="../Lab3/实验目的.html">
+        <li class="chapter " data-level="4.1.1" data-path="../Lab3/实验目的.html">
             
                 <a href="../Lab3/实验目的.html">
             
@@ -897,7 +932,7 @@
             
         </li>
     
-        <li class="chapter " data-level="5.1.2" data-path="../Lab3/实验内容.html">
+        <li class="chapter " data-level="4.1.2" data-path="../Lab3/实验内容.html">
             
                 <a href="../Lab3/实验内容.html">
             
@@ -922,7 +957,7 @@
         
         
     
-        <li class="chapter " data-level="6.1" data-path="../Lab4/">
+        <li class="chapter " data-level="5.1" data-path="../Lab4/">
             
                 <a href="../Lab4/">
             
@@ -936,7 +971,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="6.1.1" data-path="../Lab4/实验目的.html">
+        <li class="chapter " data-level="5.1.1" data-path="../Lab4/实验目的.html">
             
                 <a href="../Lab4/实验目的.html">
             
@@ -949,7 +984,7 @@
             
         </li>
     
-        <li class="chapter " data-level="6.1.2" data-path="../Lab4/实验内容.html">
+        <li class="chapter " data-level="5.1.2" data-path="../Lab4/实验内容.html">
             
                 <a href="../Lab4/实验内容.html">
             
@@ -974,7 +1009,7 @@
         
         
     
-        <li class="chapter " data-level="7.1" data-path="../Lab5/">
+        <li class="chapter " data-level="6.1" data-path="../Lab5/">
             
                 <a href="../Lab5/">
             
@@ -988,7 +1023,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="7.1.1" data-path="../Lab5/实验目的.html">
+        <li class="chapter " data-level="6.1.1" data-path="../Lab5/实验目的.html">
             
                 <a href="../Lab5/实验目的.html">
             
@@ -1001,7 +1036,7 @@
             
         </li>
     
-        <li class="chapter " data-level="7.1.2" data-path="../Lab5/实验内容.html">
+        <li class="chapter " data-level="6.1.2" data-path="../Lab5/实验内容.html">
             
                 <a href="../Lab5/实验内容.html">
             
@@ -1026,7 +1061,7 @@
         
         
     
-        <li class="chapter " data-level="8.1" data-path="../Lab6/">
+        <li class="chapter " data-level="7.1" data-path="../Lab6/">
             
                 <a href="../Lab6/">
             
@@ -1040,7 +1075,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="8.1.1" data-path="../Lab6/实验目的.html">
+        <li class="chapter " data-level="7.1.1" data-path="../Lab6/实验目的.html">
             
                 <a href="../Lab6/实验目的.html">
             
@@ -1053,7 +1088,7 @@
             
         </li>
     
-        <li class="chapter " data-level="8.1.2" data-path="../Lab6/实验内容.html">
+        <li class="chapter " data-level="7.1.2" data-path="../Lab6/实验内容.html">
             
                 <a href="../Lab6/实验内容.html">
             
@@ -1078,7 +1113,7 @@
         
         
     
-        <li class="chapter " data-level="9.1" data-path="../Lab7/">
+        <li class="chapter " data-level="8.1" data-path="../Lab7/">
             
                 <a href="../Lab7/">
             
@@ -1092,7 +1127,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="9.1.1" data-path="../Lab7/实验目的.html">
+        <li class="chapter " data-level="8.1.1" data-path="../Lab7/实验目的.html">
             
                 <a href="../Lab7/实验目的.html">
             
@@ -1105,7 +1140,7 @@
             
         </li>
     
-        <li class="chapter " data-level="9.1.2" data-path="../Lab7/实验内容.html">
+        <li class="chapter " data-level="8.1.2" data-path="../Lab7/实验内容.html">
             
                 <a href="../Lab7/实验内容.html">
             
@@ -1130,7 +1165,7 @@
         
         
     
-        <li class="chapter " data-level="10.1" data-path="../Lab8/">
+        <li class="chapter " data-level="9.1" data-path="../Lab8/">
             
                 <a href="../Lab8/">
             
@@ -1144,7 +1179,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="10.1.1" data-path="../Lab8/实验目的.html">
+        <li class="chapter " data-level="9.1.1" data-path="../Lab8/实验目的.html">
             
                 <a href="../Lab8/实验目的.html">
             
@@ -1157,7 +1192,7 @@
             
         </li>
     
-        <li class="chapter " data-level="10.1.2" data-path="../Lab8/实验内容.html">
+        <li class="chapter " data-level="9.1.2" data-path="../Lab8/实验内容.html">
             
                 <a href="../Lab8/实验内容.html">
             
@@ -1182,7 +1217,7 @@
 
     <li>
         <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+            本书使用 GitBook 发布
         </a>
     </li>
 </ul>
@@ -1220,8 +1255,10 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="lab1">Lab1</h1>
-
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#lab1"><b></b>Lab1</a></li></ul></div><a href="#lab1" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="lab1"><a name="lab1" class="anchor-navigation-ex-anchor" href="#lab1"><i class="fa fa-link" aria-hidden="true"></i></a>Lab1</h1>
+<footer class="page-footer"><span class="copyright">Copyright &#xA9;  2020 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x6700;&#x540E;&#x4FEE;&#x8BA2;&#x4E8E;&#xFF1A;
+2020-06-21 20:00:49
+</span></footer>
                                 
                                 </section>
                             
@@ -1264,7 +1301,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Lab1","level":"3.1","depth":1,"next":{"title":"实验目的","level":"3.1.1","depth":2,"path":"Lab1/实验目的.md","ref":"Lab1/实验目的.md","articles":[]},"previous":{"title":"附录B：ucore实验参考资料","level":"2.1.4","depth":2,"path":"Lab0/附录B：ucore实验参考资料.md","ref":"Lab0/附录B：ucore实验参考资料.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Lab1/README.md","mtime":"2020-06-21T12:00:49.750Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-04T03:52:02.972Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Lab1","level":"2.1","depth":1,"next":{"title":"实验目的","level":"2.1.1","depth":2,"path":"Lab1/实验目的.md","ref":"Lab1/实验目的.md","articles":[]},"previous":{"title":"附录B：ucore实验参考资料","level":"1.2.4","depth":2,"path":"Lab0/附录B：ucore实验参考资料.md","ref":"Lab0/附录B：ucore实验参考资料.md","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-comscore","prism","-highlight","copy-code-button","search-pro","-search","-lunr","expandable-chapters","chapter-fold","splitter","github-buttons","tbfed-pagefooter","baidu-tongji","anchor-navigation-ex","favicon","-sharing","sharing-plus","flexible-alerts","livereload"],"styles":{"website":"./public-repertory/css/gitbook-configure.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy  2020","modify_label":"最后修订于：","modify_format":"YYYY-MM-DD HH:mm:ss"},"chapter-fold":{},"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"shell":"bash"}},"livereload":{},"baidu-tongji":{"url":"https://hm.baidu.com/hm.js","token":"55e7dfe47f4dc1c018d4042fdfa62565"},"splitter":{},"search-pro":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"showLevel":false,"associatedWithSummary":true,"mode":"float","showGoTop":true,"printLog":false,"multipleH1":true,"float":{"floatIcon":"fa fa-navicon","showLevelIcon":false,"level1Icon":"","level2Icon":"","level3Icon":""},"pageTop":{"showLevelIcon":false,"level1Icon":"","level2Icon":"","level3Icon":""}},"favicon":{"shortcut":"asset/img/favicon.ico","bookmark":"asset/img/favicon.ico","appleTouch":"asset/img/favicon.ico","appleTochMore":{"120*120":"asset/img/favicon.ico","180*180":"asset/img/favicon.ico"}},"theme-comscore":{},"github-buttons":{"buttons":[{"user":"nkgongxl","repo":"ucoreonrv","type":"star","count":true,"size":"small"},{"user":"KeLee5453","width":"160","type":"follow","count":true,"size":"small"}]},"flexible-alerts":{"style":"callout","note":{"label":"Note","icon":"fa fa-info-circle","className":"info"},"tip":{"label":"Tip","icon":"fa fa-lightbulb-o","className":"tip"},"warning":{"label":"Warning","icon":"fa fa-exclamation-triangle","className":"warning"},"danger":{"label":"Attention","icon":"fa fa-ban","className":"danger"}},"copy-code-button":{},"sharing":{"qq":true,"all":["douban","facebook","google","instapaper","linkedin","twitter","weibo","messenger","qq","qzone","viber","whatsapp"],"douban":false,"facebook":false,"weibo":true,"twitter":true,"pocket":false,"google":true,"qzone":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"theme":"default","author":"KeLee","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"uCore OS(on RISC-V32)实验指导书","language":"zh-hans","gitbook":"*","description":""},"file":{"path":"Lab1/README.md","mtime":"2020-06-21T12:00:49.750Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-14T05:24:14.160Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
@@ -1274,31 +1311,55 @@
     <script src="../gitbook/theme.js"></script>
     
         
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-baidu-tongji/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing-plus/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-flexible-alerts/plugin.js"></script>
+        
+    
+        
         <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
         
     
         
-        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
-        
         <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-comscore/test.js"></script>
         
     
 
