@@ -1,7 +1,7 @@
 # Summary
 
 * [Introduction](README.md)
-* [LAB0](Lab0/README.md)
+* [LAB0：ready~go!](Lab0/README.md)
     * [实验目的](Lab0/实验目的.md)
     * [实验内容](Lab0/实验内容.md)
     * [前导知识](Lab0/前导知识.md)
@@ -16,14 +16,6 @@
         * [安装开发工具](Lab0/配置环境/安装开发工具.md)
         * [安装硬件模拟器](Lab0/配置环境/安装硬件模拟器.md)
         * [安装调试工具](Lab0/配置环境/安装调试工具.md)
-    * [附录](Lab0/附录.md)
-    * [准备知识](Lab0/准备知识.md)
-        * [了解OS实验](Lab0/了解OS实验.md)
-        * [设置实验环境](Lab0/设置实验环境.md)
-            * [开发OS实验的简单步骤](Lab0/开发OS实验的简单步骤.md)
-            * [通过虚拟机使用Linux实验环境](Lab0/通过虚拟机使用Linux实验环境.md)
-            * [安装使用Linux实验环境](Lab0/安装使用Linux实验环境.md)
-            * [实验中可能使用的软件](Lab0/实验中可能使用的软件.md)
 * [LAB1](Lab1/README.md)
     * [实验目的](Lab1/实验目的.md)
     * [实验内容](Lab1/实验内容.md)
