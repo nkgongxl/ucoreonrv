@@ -38,3 +38,6 @@ kelee@mail.nankai.edu.cn
 
 如若对本指导书有任何疑问，请联系维护者！
 
+Reference
+
+[ucore step by step](https://1790865014.gitbook.io/ucore-step-by-step/)
