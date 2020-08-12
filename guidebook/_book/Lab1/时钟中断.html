@@ -1,0 +1,1193 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>时钟中断 · uCore OS(on RISC-V32)实验指导书</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="KeLee">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-flexible-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-comscore/test.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+
+        
+    
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="项目组成与执行流.html" />
+    
+    
+    <link rel="prev" href="中断处理程序.html" />
+    
+
+    
+        <link rel="shortcut icon" href='../asset/img/favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../asset/img/favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="apple-touch-icon" href='../asset/img/favicon.ico'>
+    
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"nkgongxl","repo":"ucoreonrv","type":"star","count":true,"size":"small"},{"user":"KeLee5453","width":"160","type":"follow","count":true,"size":"small"}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../Lab0/">
+            
+                <a href="../Lab0/">
+            
+                    
+                    LAB0：ready~go!
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../Lab0/实验目的.html">
+            
+                <a href="../Lab0/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../Lab0/实验内容.html">
+            
+                <a href="../Lab0/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../Lab0/前导知识.html">
+            
+                <a href="../Lab0/前导知识.html">
+            
+                    
+                    前导知识
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.3.1" data-path="../Lab0/前导知识/了解uCore.html">
+            
+                <a href="../Lab0/前导知识/了解uCore.html">
+            
+                    
+                    了解uCore
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.2" data-path="../Lab0/前导知识/了解RISC-V.html">
+            
+                <a href="../Lab0/前导知识/了解RISC-V.html">
+            
+                    
+                    了解RISC-V
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.3" data-path="../Lab0/前导知识/了解OS实验.html">
+            
+                <a href="../Lab0/前导知识/了解OS实验.html">
+            
+                    
+                    了解OS实验
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.4" data-path="../Lab0/前导知识/了解实验环境.html">
+            
+                <a href="../Lab0/前导知识/了解实验环境.html">
+            
+                    
+                    了解实验环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.5" data-path="../Lab0/前导知识/了解开发调试基本工具.html">
+            
+                <a href="../Lab0/前导知识/了解开发调试基本工具.html">
+            
+                    
+                    了解开发调试基本工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.6" data-path="../Lab0/前导知识/了解硬件模拟器.html">
+            
+                <a href="../Lab0/前导知识/了解硬件模拟器.html">
+            
+                    
+                    了解硬件模拟器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../Lab0/配置环境.html">
+            
+                <a href="../Lab0/配置环境.html">
+            
+                    
+                    配置环境
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.4.1" data-path="../Lab0/配置环境/安装虚拟环境.html">
+            
+                <a href="../Lab0/配置环境/安装虚拟环境.html">
+            
+                    
+                    安装虚拟环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.2" data-path="../Lab0/配置环境/安装开发工具.html">
+            
+                <a href="../Lab0/配置环境/安装开发工具.html">
+            
+                    
+                    安装开发工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.3" data-path="../Lab0/配置环境/安装硬件模拟器.html">
+            
+                <a href="../Lab0/配置环境/安装硬件模拟器.html">
+            
+                    
+                    安装硬件模拟器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.4" data-path="../Lab0/配置环境/安装调试工具.html">
+            
+                <a href="../Lab0/配置环境/安装调试工具.html">
+            
+                    
+                    安装调试工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../Lab0.5/">
+            
+                <a href="../Lab0.5/">
+            
+                    
+                    LAB0.5：最小可执行内核
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../Lab0.5/实验目的.html">
+            
+                <a href="../Lab0.5/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../Lab0.5/实验内容.html">
+            
+                <a href="../Lab0.5/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../Lab0.5/练习.html">
+            
+                <a href="../Lab0.5/练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../Lab0.5/内存布局.html">
+            
+                <a href="../Lab0.5/内存布局.html">
+            
+                    
+                    内存布局
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../Lab0.5/链接脚本.html">
+            
+                <a href="../Lab0.5/链接脚本.html">
+            
+                    
+                    链接脚本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../Lab0.5/真正的入口点.html">
+            
+                <a href="../Lab0.5/真正的入口点.html">
+            
+                    
+                    真正的入口点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../Lab0.5/从SBI到stdio.html">
+            
+                <a href="../Lab0.5/从SBI到stdio.html">
+            
+                    
+                    从SBI到stdio
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../Lab0.5/编译运行.html">
+            
+                <a href="../Lab0.5/编译运行.html">
+            
+                    
+                    编译运行
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../Lab0.5/项目组成与执行流.html">
+            
+                <a href="../Lab0.5/项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    LAB1：中断机制
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="实验目的.html">
+            
+                <a href="实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="实验内容.html">
+            
+                <a href="实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="练习.html">
+            
+                <a href="练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="RISC-V中断相关.html">
+            
+                <a href="RISC-V中断相关.html">
+            
+                    
+                    RISC-V中断相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="上下文处理.html">
+            
+                <a href="上下文处理.html">
+            
+                    
+                    上下文处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="中断处理程序.html">
+            
+                <a href="中断处理程序.html">
+            
+                    
+                    中断处理程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.7" data-path="时钟中断.html">
+            
+                <a href="时钟中断.html">
+            
+                    
+                    时钟中断
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="项目组成与执行流.html">
+            
+                <a href="项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../Lab2/">
+            
+                <a href="../Lab2/">
+            
+                    
+                    LAB2
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Lab2/实验目的.html">
+            
+                <a href="../Lab2/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../Lab2/实验内容.html">
+            
+                <a href="../Lab2/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../Lab3/">
+            
+                <a href="../Lab3/">
+            
+                    
+                    LAB3
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../Lab3/实验目的.html">
+            
+                <a href="../Lab3/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../Lab3/实验内容.html">
+            
+                <a href="../Lab3/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../Lab4/">
+            
+                <a href="../Lab4/">
+            
+                    
+                    LAB4
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../Lab4/实验目的.html">
+            
+                <a href="../Lab4/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../Lab4/实验内容.html">
+            
+                <a href="../Lab4/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../Lab5/">
+            
+                <a href="../Lab5/">
+            
+                    
+                    LAB5
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../Lab5/实验目的.html">
+            
+                <a href="../Lab5/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../Lab5/实验内容.html">
+            
+                <a href="../Lab5/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../Lab6/">
+            
+                <a href="../Lab6/">
+            
+                    
+                    LAB6
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../Lab6/实验目的.html">
+            
+                <a href="../Lab6/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../Lab6/实验内容.html">
+            
+                <a href="../Lab6/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../Lab7/">
+            
+                <a href="../Lab7/">
+            
+                    
+                    LAB7
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../Lab7/实验目的.html">
+            
+                <a href="../Lab7/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../Lab7/实验内容.html">
+            
+                <a href="../Lab7/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../Lab8/">
+            
+                <a href="../Lab8/">
+            
+                    
+                    LAB8
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../Lab8/实验目的.html">
+            
+                <a href="../Lab8/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../Lab8/实验内容.html">
+            
+                <a href="../Lab8/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >时钟中断</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#&#x65F6;&#x949F;&#x4E2D;&#x65AD;"><b></b>&#x65F6;&#x949F;&#x4E2D;&#x65AD;</a></li></ul></div><a href="#&#x65F6;&#x949F;&#x4E2D;&#x65AD;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="&#x65F6;&#x949F;&#x4E2D;&#x65AD;"><a name="&#x65F6;&#x949F;&#x4E2D;&#x65AD;" class="anchor-navigation-ex-anchor" href="#&#x65F6;&#x949F;&#x4E2D;&#x65AD;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x65F6;&#x949F;&#x4E2D;&#x65AD;</h1>
+<p>&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x9700;&#x8981;CPU&#x786C;&#x4EF6;&#x7684;&#x652F;&#x6301;&#x3002;CPU&#x4EE5;&quot;&#x65F6;&#x949F;&#x5468;&#x671F;&quot;&#x4E3A;&#x5DE5;&#x4F5C;&#x7684;&#x57FA;&#x672C;&#x65F6;&#x95F4;&#x5355;&#x4F4D;&#xFF0C;&#x5BF9;&#x903B;&#x8F91;&#x95E8;&#x7684;&#x65F6;&#x5E8F;&#x7535;&#x8DEF;&#x8FDB;&#x884C;&#x540C;&#x6B65;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x7684;&#x201C;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x201D;&#x5B9E;&#x9645;&#x4E0A;&#x5C31;&#x662F;&#x201D;&#x6BCF;&#x9694;&#x82E5;&#x5E72;&#x4E2A;&#x65F6;&#x949F;&#x5468;&#x671F;&#x6267;&#x884C;&#x4E00;&#x6B21;&#x7684;&#x7A0B;&#x5E8F;&#x201C;&#x3002;</p>
+<p>&#x201D;&#x82E5;&#x5E72;&#x4E2A;&#x65F6;&#x949F;&#x5468;&#x671F;&#x201C;&#x662F;&#x591A;&#x5C11;&#x4E2A;&#xFF1F;&#x592A;&#x77ED;&#x4E86;&#x80AF;&#x5B9A;&#x4E0D;&#x884C;&#x3002;&#x5982;&#x679C;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x5904;&#x7406;&#x7A0B;&#x5E8F;&#x9700;&#x8981;100&#x4E2A;&#x65F6;&#x949F;&#x5468;&#x671F;&#x6267;&#x884C;&#xFF0C;&#x800C;&#x4F60;&#x6BCF;50&#x4E2A;&#x65F6;&#x949F;&#x5468;&#x671F;&#x5C31;&#x89E6;&#x53D1;&#x4E00;&#x4E2A;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF0C;&#x90A3;&#x4E48;&#x95F4;&#x9694;&#x65F6;&#x95F4;&#x8FDE;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x7684;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x7A0B;&#x5E8F;&#x90FD;&#x8DD1;&#x4E0D;&#x5B8C;&#x3002;&#x5982;&#x679C;&#x4F60;200&#x4E2A;&#x65F6;&#x949F;&#x5468;&#x671F;&#x5C31;&#x89E6;&#x53D1;&#x4E00;&#x4E2A;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF0C;&#x90A3;&#x4E48;CPU&#x7684;&#x65F6;&#x95F4;&#x5C06;&#x6709;&#x4E00;&#x534A;&#x6D88;&#x8017;&#x5728;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF0C;&#x5F00;&#x9500;&#x592A;&#x5927;&#x3002;&#x4E00;&#x822C;&#x800C;&#x8A00;&#xFF0C;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x95F4;&#x9694;&#x8BBE;&#x7F6E;&#x4E3A;CPU&#x9891;&#x7387;&#x7684;1%&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6BCF;&#x79D2;&#x949F;&#x89E6;&#x53D1;100&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF0C;&#x907F;&#x514D;&#x5F00;&#x9500;&#x8FC7;&#x5927;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x7528;&#x5230;&#x7684;RISCV&#x5BF9;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x7684;&#x786C;&#x4EF6;&#x652F;&#x6301;&#x5305;&#x62EC;&#xFF1A;</p>
+<ul>
+<li>OpenSBI&#x63D0;&#x4F9B;&#x7684;<code>sbi_set_timer()</code>&#x63A5;&#x53E3;&#xFF0C;&#x53EF;&#x4EE5;&#x4F20;&#x5165;&#x4E00;&#x4E2A;&#x65F6;&#x523B;&#xFF0C;&#x8BA9;&#x5B83;&#x5728;&#x90A3;&#x4E2A;&#x65F6;&#x523B;&#x89E6;&#x53D1;&#x4E00;&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;</li>
+<li><code>rdtime</code>&#x4F2A;&#x6307;&#x4EE4;&#xFF0C;&#x8BFB;&#x53D6;&#x4E00;&#x4E2A;&#x53EB;&#x505A;<code>time</code>&#x7684;CSR&#x7684;&#x6570;&#x503C;&#xFF0C;&#x8868;&#x793A;CPU&#x542F;&#x52A8;&#x4E4B;&#x540E;&#x7ECF;&#x8FC7;&#x7684;&#x771F;&#x5B9E;&#x65F6;&#x95F4;&#x3002;&#x5728;&#x4E0D;&#x540C;&#x786C;&#x4EF6;&#x5E73;&#x53F0;&#xFF0C;&#x65F6;&#x949F;&#x9891;&#x7387;&#x53EF;&#x80FD;&#x4E0D;&#x540C;&#x3002;&#x5728;QEMU&#x4E0A;&#xFF0C;&#x8FD9;&#x4E2A;&#x65F6;&#x949F;&#x7684;&#x9891;&#x7387;&#x662F;10MHz, &#x6BCF;&#x8FC7;1s, <code>rdtime</code>&#x8FD4;&#x56DE;&#x7684;&#x7ED3;&#x679C;&#x589E;&#x5927;<code>10000000</code></li>
+</ul>
+<blockquote>
+<p>[!NOTE|style:flat]</p>
+<p>&#x5728;RISCV32&#x548C;RISCV64&#x67B6;&#x6784;&#x4E2D;&#xFF0C;<code>time</code>&#x5BC4;&#x5B58;&#x5668;&#x90FD;&#x662F;64&#x4F4D;&#x7684;&#x3002;</p>
+<p><code>rdcycle</code>&#x4F2A;&#x6307;&#x4EE4;&#x53EF;&#x4EE5;&#x8BFB;&#x53D6;&#x7ECF;&#x8FC7;&#x7684;&#x65F6;&#x949F;&#x5468;&#x671F;&#x6570;&#x76EE;&#xFF0C;&#x5BF9;&#x5E94;&#x4E00;&#x4E2A;&#x5BC4;&#x5B58;&#x5668;<code>cycle</code></p>
+</blockquote>
+<p>&#x6CE8;&#x610F;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x201C;&#x6BCF;&#x9694;&#x82E5;&#x5E72;&#x65F6;&#x95F4;&#x5C31;&#x53D1;&#x751F;&#x4E00;&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x201D;&#xFF0C;&#x4F46;&#x662F;OpenSBI&#x63D0;&#x4F9B;&#x7684;&#x63A5;&#x53E3;&#x4E00;&#x6B21;&#x53EA;&#x80FD;&#x8BBE;&#x7F6E;&#x4E00;&#x4E2A;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x4E8B;&#x4EF6;&#x3002;&#x6211;&#x4EEC;&#x91C7;&#x7528;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#xFF1A;&#x4E00;&#x5F00;&#x59CB;&#x53EA;&#x8BBE;&#x7F6E;&#x4E00;&#x4E2A;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF0C;&#x4E4B;&#x540E;&#x6BCF;&#x6B21;&#x53D1;&#x751F;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8BBE;&#x7F6E;&#x4E0B;&#x4E00;&#x6B21;&#x7684;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x3002;</p>
+<p>&#x5728;clock.c&#x91CC;&#x9762;&#x521D;&#x59CB;&#x5316;&#x65F6;&#x949F;&#x5E76;&#x5C01;&#x88C5;&#x4E00;&#x4E9B;&#x63A5;&#x53E3;</p>
+<pre class="language-"><code class="lang-c"><span class="token comment">//libs/sbi.c</span>
+
+<span class="token comment">//&#x5F53;time&#x5BC4;&#x5B58;&#x5668;(rdtime&#x7684;&#x8FD4;&#x56DE;&#x503C;)&#x4E3A;stime_value&#x7684;&#x65F6;&#x5019;&#x89E6;&#x53D1;&#x4E00;&#x4E2A;&#x65F6;&#x949F;&#x4E2D;&#x65AD;</span>
+<span class="token keyword">void</span> <span class="token function">sbi_set_timer</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token keyword">long</span> stime_value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">sbi_call</span><span class="token punctuation">(</span>SBI_SET_TIMER<span class="token punctuation">,</span> stime_value<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// kern/driver/clock.c</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;clock.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;defs.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sbi.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;riscv.h&gt;</span></span>
+
+<span class="token comment">//volatile&#x544A;&#x8BC9;&#x7F16;&#x8BD1;&#x5668;&#x8FD9;&#x4E2A;&#x53D8;&#x91CF;&#x53EF;&#x80FD;&#x5728;&#x5176;&#x4ED6;&#x5730;&#x65B9;&#x88AB;&#x778E;&#x6539;&#x4E00;&#x901A;&#xFF0C;&#x6240;&#x4EE5;&#x7F16;&#x8BD1;&#x5668;&#x4E0D;&#x8981;&#x5BF9;&#x8FD9;&#x4E2A;&#x53D8;&#x91CF;&#x778E;&#x4F18;&#x5316;</span>
+<span class="token keyword">volatile</span> size_t ticks<span class="token punctuation">;</span>
+
+<span class="token comment">//&#x5BF9;64&#x4F4D;&#x548C;32&#x4F4D;&#x67B6;&#x6784;&#xFF0C;&#x8BFB;&#x53D6;time&#x7684;&#x65B9;&#x6CD5;&#x662F;&#x4E0D;&#x540C;&#x7684;</span>
+<span class="token comment">//32&#x4F4D;&#x67B6;&#x6784;&#x4E0B;&#xFF0C;&#x9700;&#x8981;&#x628A;64&#x4F4D;&#x7684;time&#x5BC4;&#x5B58;&#x5668;&#x8BFB;&#x5230;&#x4E24;&#x4E2A;32&#x4F4D;&#x6574;&#x6570;&#x91CC;&#xFF0C;&#x7136;&#x540E;&#x62FC;&#x8D77;&#x6765;&#x5F62;&#x6210;&#x4E00;&#x4E2A;64&#x4F4D;&#x6574;&#x6570;</span>
+<span class="token comment">//64&#x4F4D;&#x67B6;&#x6784;&#x7B80;&#x5355;&#x7684;&#x4E00;&#x53E5;rdtime&#x5C31;&#x53EF;&#x4EE5;&#x4E86;</span>
+<span class="token comment">//__riscv_xlen&#x662F;gcc&#x5B9A;&#x4E49;&#x7684;&#x4E00;&#x4E2A;&#x5B8F;&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x533A;&#x5206;&#x662F;32&#x4F4D;&#x8FD8;&#x662F;64&#x4F4D;&#x3002;</span>
+<span class="token keyword">static</span> <span class="token keyword">inline</span> uint64_t <span class="token function">get_time</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment">//&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x65F6;&#x95F4;</span>
+<span class="token macro property">#<span class="token directive keyword">if</span> __riscv_xlen == 64</span>
+    uint64_t n<span class="token punctuation">;</span>
+    __asm__ <span class="token function">__volatile__</span><span class="token punctuation">(</span><span class="token string">&quot;rdtime %0&quot;</span> <span class="token operator">:</span> <span class="token string">&quot;=r&quot;</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> n<span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">else</span></span>
+    uint32_t lo<span class="token punctuation">,</span> hi<span class="token punctuation">,</span> tmp<span class="token punctuation">;</span>
+    __asm__ <span class="token function">__volatile__</span><span class="token punctuation">(</span>
+        <span class="token string">&quot;1:\n&quot;</span>
+        <span class="token string">&quot;rdtimeh %0\n&quot;</span>
+        <span class="token string">&quot;rdtime %1\n&quot;</span>
+        <span class="token string">&quot;rdtimeh %2\n&quot;</span>
+        <span class="token string">&quot;bne %0, %2, 1b&quot;</span>
+        <span class="token operator">:</span> <span class="token string">&quot;=&amp;r&quot;</span><span class="token punctuation">(</span>hi<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;=&amp;r&quot;</span><span class="token punctuation">(</span>lo<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;=&amp;r&quot;</span><span class="token punctuation">(</span>tmp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>uint64_t<span class="token punctuation">)</span>hi <span class="token operator">&lt;&lt;</span> <span class="token number">32</span><span class="token punctuation">)</span> <span class="token operator">|</span> lo<span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span>
+<span class="token punctuation">}</span>
+
+
+<span class="token comment">// Hardcode timebase</span>
+<span class="token keyword">static</span> uint64_t timebase <span class="token operator">=</span> <span class="token number">100000</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">clock_init</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// sie&#x8FD9;&#x4E2A;CSR&#x53EF;&#x4EE5;&#x5355;&#x72EC;&#x4F7F;&#x80FD;/&#x7981;&#x7528;&#x67D0;&#x4E2A;&#x6765;&#x6E90;&#x7684;&#x4E2D;&#x65AD;&#x3002;&#x9ED8;&#x8BA4;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x662F;&#x5173;&#x95ED;&#x7684;</span>
+    <span class="token comment">// &#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x8981;&#x5728;&#x521D;&#x59CB;&#x5316;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4F7F;&#x80FD;&#x65F6;&#x949F;&#x4E2D;&#x65AD;</span>
+    <span class="token function">set_csr</span><span class="token punctuation">(</span>sie<span class="token punctuation">,</span> MIP_STIP<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// enable timer interrupt in sie</span>
+    <span class="token comment">//&#x8BBE;&#x7F6E;&#x7B2C;&#x4E00;&#x4E2A;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x4E8B;&#x4EF6;</span>
+    <span class="token function">clock_set_next_event</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// &#x521D;&#x59CB;&#x5316;&#x4E00;&#x4E2A;&#x8BA1;&#x6570;&#x5668;</span>
+    ticks <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token function">cprintf</span><span class="token punctuation">(</span><span class="token string">&quot;++ setup timer interrupts\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//&#x8BBE;&#x7F6E;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF1A;timer&#x7684;&#x6570;&#x503C;&#x53D8;&#x4E3A;&#x5F53;&#x524D;&#x65F6;&#x95F4; + timebase &#x540E;&#xFF0C;&#x89E6;&#x53D1;&#x4E00;&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;</span>
+<span class="token comment">//&#x5BF9;&#x4E8E;QEMU, timer&#x589E;&#x52A0;1&#xFF0C;&#x8FC7;&#x53BB;&#x4E86;10^-7 s&#xFF0C; &#x4E5F;&#x5C31;&#x662F;100ns</span>
+<span class="token keyword">void</span> <span class="token function">clock_set_next_event</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token function">sbi_set_timer</span><span class="token punctuation">(</span><span class="token function">get_time</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> timebase<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+</code></pre>
+<p>&#x56DE;&#x6765;&#x770B;trap.c&#x91CC;&#x9762;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x5904;&#x7406;&#x7684;&#x4EE3;&#x7801;, &#x8FD8;&#x662F;&#x5F88;&#x7B80;&#x5355;&#x7684;&#xFF1A;&#x6BCF;&#x79D2;100&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF0C;&#x89E6;&#x53D1;&#x6BCF;&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x540E;&#x8BBE;&#x7F6E;10ms&#x540E;&#x89E6;&#x53D1;&#x4E0B;&#x4E00;&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF0C;&#x6BCF;&#x89E6;&#x53D1;100&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#xFF08;1&#x79D2;&#x949F;&#xFF09;&#x8F93;&#x51FA;&#x4E00;&#x884C;&#x4FE1;&#x606F;&#x5230;&#x63A7;&#x5236;&#x53F0;&#x3002;</p>
+<pre class="language-"><code class="lang-c"><span class="token comment">// kern/trap/trap.c</span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;clock.h&gt;</span></span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> TICK_NUM 100</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">print_ticks</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">cprintf</span><span class="token punctuation">(</span><span class="token string">&quot;%d ticks\n&quot;</span><span class="token punctuation">,</span> TICK_NUM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">ifdef</span> DEBUG_GRADE</span>
+    <span class="token function">cprintf</span><span class="token punctuation">(</span><span class="token string">&quot;End of Test.\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">&quot;EOT: kernel seems ok.&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">interrupt_handler</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">trapframe</span> <span class="token operator">*</span>tf<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    intptr_t cause <span class="token operator">=</span> <span class="token punctuation">(</span>tf<span class="token operator">-&gt;</span>cause <span class="token operator">&lt;&lt;</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">&gt;&gt;</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span>cause<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+           <span class="token comment">/* blabla &#x5176;&#x4ED6;case*/</span>
+        <span class="token keyword">case</span> IRQ_S_TIMER<span class="token operator">:</span>
+            <span class="token function">clock_set_next_event</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//&#x53D1;&#x751F;&#x8FD9;&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x8981;&#x8BBE;&#x7F6E;&#x4E0B;&#x4E00;&#x6B21;&#x65F6;&#x949F;&#x4E2D;&#x65AD;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">++</span>ticks <span class="token operator">%</span> TICK_NUM <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token function">print_ticks</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token comment">/* blabla &#x5176;&#x4ED6;case*/</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>&#x73B0;&#x5728;&#x6267;&#x884C;<code>make qemu</code>, &#x5E94;&#x8BE5;&#x80FD;&#x770B;&#x5230;&#x6253;&#x5370;&#x4E00;&#x884C;&#x884C;&#x7684;<code>100 ticks</code>&#x3002;</p>
+<blockquote>
+<p>[!TIP|style:flat]</p>
+<p>&#x65F6;&#x949F;&#x662F;&#x5C5E;&#x4E8E;&#x5916;&#x90E8;&#x8BBE;&#x5907;&#x4E86;&#x3002;&#x4E4B;&#x6240;&#x4EE5;&#x7ED9;&#x5927;&#x5BB6;&#x5448;&#x73B0;&#x7740;&#x4E00;&#x5757;&#xFF0C;&#x662F;&#x4E3A;&#x4E86;&#x80FD;&#x591F;&#x66F4;&#x597D;&#x7684;&#x7406;&#x89E3;&#xFF0C;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x4E0E;&#x5916;&#x8BBE;&#x5982;&#x4F55;&#x8FDB;&#x884C;&#x4EA4;&#x4E92;&#x3002;&#x4E2D;&#x65AD;&#x6765;&#x4E34;&#x5982;&#x4F55;&#x5904;&#x7406;&#x3002; </p>
+</blockquote>
+<footer class="page-footer"><span class="copyright">Copyright &#xA9;  2020 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x6700;&#x540E;&#x4FEE;&#x8BA2;&#x4E8E;&#xFF1A;
+2020-08-12 23:33:53
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="中断处理程序.html" class="navigation navigation-prev " aria-label="Previous page: 中断处理程序">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="项目组成与执行流.html" class="navigation navigation-next " aria-label="Next page: 项目组成与执行流">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"时钟中断","level":"1.4.7","depth":2,"next":{"title":"项目组成与执行流","level":"1.4.8","depth":2,"path":"Lab1/项目组成与执行流.md","ref":"Lab1/项目组成与执行流.md","articles":[]},"previous":{"title":"中断处理程序","level":"1.4.6","depth":2,"path":"Lab1/中断处理程序.md","ref":"Lab1/中断处理程序.md","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-comscore","prism","-highlight","copy-code-button","search-pro","-search","-lunr","expandable-chapters","chapter-fold","splitter","github-buttons","tbfed-pagefooter","baidu-tongji","anchor-navigation-ex","favicon","-sharing","sharing-plus","flexible-alerts","livereload"],"styles":{"website":"./public-repertory/css/gitbook-configure.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy  2020","modify_label":"最后修订于：","modify_format":"YYYY-MM-DD HH:mm:ss"},"chapter-fold":{},"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"shell":"bash"}},"livereload":{},"baidu-tongji":{"url":"https://hm.baidu.com/hm.js","token":"55e7dfe47f4dc1c018d4042fdfa62565"},"splitter":{},"search-pro":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"showLevel":false,"associatedWithSummary":true,"mode":"float","showGoTop":true,"printLog":false,"multipleH1":true,"float":{"floatIcon":"fa fa-navicon","showLevelIcon":false,"level1Icon":"","level2Icon":"","level3Icon":""},"pageTop":{"showLevelIcon":false,"level1Icon":"","level2Icon":"","level3Icon":""}},"favicon":{"shortcut":"asset/img/favicon.ico","bookmark":"asset/img/favicon.ico","appleTouch":"asset/img/favicon.ico","appleTochMore":{"120*120":"asset/img/favicon.ico","180*180":"asset/img/favicon.ico"}},"theme-comscore":{},"github-buttons":{"buttons":[{"user":"nkgongxl","repo":"ucoreonrv","type":"star","count":true,"size":"small"},{"user":"KeLee5453","width":"160","type":"follow","count":true,"size":"small"}]},"flexible-alerts":{"style":"callout","note":{"label":"Note","icon":"fa fa-info-circle","className":"info"},"tip":{"label":"Tip","icon":"fa fa-lightbulb-o","className":"tip"},"warning":{"label":"Warning","icon":"fa fa-exclamation-triangle","className":"warning"},"danger":{"label":"Attention","icon":"fa fa-ban","className":"danger"}},"copy-code-button":{},"sharing":{"qq":true,"all":["douban","facebook","google","instapaper","linkedin","twitter","weibo","messenger","qq","qzone","viber","whatsapp"],"douban":false,"facebook":false,"weibo":true,"twitter":true,"pocket":false,"google":true,"qzone":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"theme":"default","author":"KeLee","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"uCore OS(on RISC-V32)实验指导书","language":"zh-hans","gitbook":"*","description":""},"file":{"path":"Lab1/时钟中断.md","mtime":"2020-08-12T15:33:53.813Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-12T15:39:07.593Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-baidu-tongji/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing-plus/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-flexible-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-comscore/test.js"></script>
+        
+    
+
+    </body>
+</html>
+

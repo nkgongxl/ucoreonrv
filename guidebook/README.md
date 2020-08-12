@@ -1,4 +1,4 @@
-# uCore OS(on RISC-V32)实验指导书
+# uCore OS(on RISC-V64)实验指导书
 
 * [ucore实验指导书]()
 * [ucore labs 1-8 源码和参考答案]()
