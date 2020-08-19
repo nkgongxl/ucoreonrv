@@ -1,0 +1,1368 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>相关结构体 · uCore OS(on RISC-V32)实验指导书</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="KeLee">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-flexible-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-comscore/test.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+
+        
+    
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="进程模块初始化.html" />
+    
+    
+    <link rel="prev" href="进程与线程.html" />
+    
+
+    
+        <link rel="shortcut icon" href='../asset/img/favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../asset/img/favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="apple-touch-icon" href='../asset/img/favicon.ico'>
+    
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"nkgongxl","repo":"ucoreonrv","type":"star","count":true,"size":"small"},{"user":"KeLee5453","width":"160","type":"follow","count":true,"size":"small"}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../Lab0/">
+            
+                <a href="../Lab0/">
+            
+                    
+                    LAB0：ready~go!
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../Lab0/实验目的.html">
+            
+                <a href="../Lab0/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../Lab0/实验内容.html">
+            
+                <a href="../Lab0/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../Lab0/前导知识.html">
+            
+                <a href="../Lab0/前导知识.html">
+            
+                    
+                    前导知识
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.3.1" data-path="../Lab0/前导知识/了解uCore.html">
+            
+                <a href="../Lab0/前导知识/了解uCore.html">
+            
+                    
+                    了解uCore
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.2" data-path="../Lab0/前导知识/了解RISC-V.html">
+            
+                <a href="../Lab0/前导知识/了解RISC-V.html">
+            
+                    
+                    了解RISC-V
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.3" data-path="../Lab0/前导知识/了解OS实验.html">
+            
+                <a href="../Lab0/前导知识/了解OS实验.html">
+            
+                    
+                    了解OS实验
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.4" data-path="../Lab0/前导知识/了解实验环境.html">
+            
+                <a href="../Lab0/前导知识/了解实验环境.html">
+            
+                    
+                    了解实验环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.5" data-path="../Lab0/前导知识/了解开发调试基本工具.html">
+            
+                <a href="../Lab0/前导知识/了解开发调试基本工具.html">
+            
+                    
+                    了解开发调试基本工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.6" data-path="../Lab0/前导知识/了解硬件模拟器.html">
+            
+                <a href="../Lab0/前导知识/了解硬件模拟器.html">
+            
+                    
+                    了解硬件模拟器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../Lab0/配置环境.html">
+            
+                <a href="../Lab0/配置环境.html">
+            
+                    
+                    配置环境
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.4.1" data-path="../Lab0/配置环境/安装虚拟环境.html">
+            
+                <a href="../Lab0/配置环境/安装虚拟环境.html">
+            
+                    
+                    安装虚拟环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.2" data-path="../Lab0/配置环境/安装开发工具.html">
+            
+                <a href="../Lab0/配置环境/安装开发工具.html">
+            
+                    
+                    安装开发工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.3" data-path="../Lab0/配置环境/安装硬件模拟器.html">
+            
+                <a href="../Lab0/配置环境/安装硬件模拟器.html">
+            
+                    
+                    安装硬件模拟器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.4" data-path="../Lab0/配置环境/安装调试工具.html">
+            
+                <a href="../Lab0/配置环境/安装调试工具.html">
+            
+                    
+                    安装调试工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../Lab0.5/">
+            
+                <a href="../Lab0.5/">
+            
+                    
+                    LAB0.5：最小可执行内核
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../Lab0.5/实验目的.html">
+            
+                <a href="../Lab0.5/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../Lab0.5/实验内容.html">
+            
+                <a href="../Lab0.5/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../Lab0.5/练习.html">
+            
+                <a href="../Lab0.5/练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../Lab0.5/内存布局.html">
+            
+                <a href="../Lab0.5/内存布局.html">
+            
+                    
+                    内存布局
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../Lab0.5/链接脚本.html">
+            
+                <a href="../Lab0.5/链接脚本.html">
+            
+                    
+                    链接脚本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../Lab0.5/真正的入口点.html">
+            
+                <a href="../Lab0.5/真正的入口点.html">
+            
+                    
+                    真正的入口点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../Lab0.5/从SBI到stdio.html">
+            
+                <a href="../Lab0.5/从SBI到stdio.html">
+            
+                    
+                    从SBI到stdio
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../Lab0.5/编译运行.html">
+            
+                <a href="../Lab0.5/编译运行.html">
+            
+                    
+                    编译运行
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../Lab0.5/项目组成与执行流.html">
+            
+                <a href="../Lab0.5/项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../Lab1/">
+            
+                <a href="../Lab1/">
+            
+                    
+                    LAB1：中断机制
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../Lab1/实验目的.html">
+            
+                <a href="../Lab1/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../Lab1/实验内容.html">
+            
+                <a href="../Lab1/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../Lab1/练习.html">
+            
+                <a href="../Lab1/练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../Lab1/RISC-V中断相关.html">
+            
+                <a href="../Lab1/RISC-V中断相关.html">
+            
+                    
+                    RISC-V中断相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../Lab1/上下文处理.html">
+            
+                <a href="../Lab1/上下文处理.html">
+            
+                    
+                    上下文处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../Lab1/中断处理程序.html">
+            
+                <a href="../Lab1/中断处理程序.html">
+            
+                    
+                    中断处理程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../Lab1/时钟中断.html">
+            
+                <a href="../Lab1/时钟中断.html">
+            
+                    
+                    时钟中断
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../Lab1/项目组成与执行流.html">
+            
+                <a href="../Lab1/项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../Lab2/">
+            
+                <a href="../Lab2/">
+            
+                    
+                    LAB2：物理内存管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Lab2/实验目的.html">
+            
+                <a href="../Lab2/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../Lab2/实验内容.html">
+            
+                <a href="../Lab2/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../Lab2/练习.html">
+            
+                <a href="../Lab2/练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../Lab2/地址与页表.html">
+            
+                <a href="../Lab2/地址与页表.html">
+            
+                    
+                    地址与页表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../Lab2/物理内存探测.html">
+            
+                <a href="../Lab2/物理内存探测.html">
+            
+                    
+                    物理内存探测
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../Lab2/以页为单位管理物理内存.html">
+            
+                <a href="../Lab2/以页为单位管理物理内存.html">
+            
+                    
+                    以页为单位管理物理内存
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../Lab2/页面分配算法.html">
+            
+                <a href="../Lab2/页面分配算法.html">
+            
+                    
+                    页面分配算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="../Lab2/项目组成与执行流.html">
+            
+                <a href="../Lab2/项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../Lab3/">
+            
+                <a href="../Lab3/">
+            
+                    
+                    LAB3：虚拟内存管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../Lab3/实验目的.html">
+            
+                <a href="../Lab3/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../Lab3/实验内容.html">
+            
+                <a href="../Lab3/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../Lab3/练习.html">
+            
+                <a href="../Lab3/练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../Lab3/页面置换.html">
+            
+                <a href="../Lab3/页面置换.html">
+            
+                    
+                    页面置换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../Lab3/PageFault.html">
+            
+                <a href="../Lab3/PageFault.html">
+            
+                    
+                    PageFault
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.6" data-path="../Lab3/使用多级页表.html">
+            
+                <a href="../Lab3/使用多级页表.html">
+            
+                    
+                    使用多级页表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.7" data-path="../Lab3/页面置换机制.html">
+            
+                <a href="../Lab3/页面置换机制.html">
+            
+                    
+                    页面置换机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.8" data-path="../Lab3/FIFO置换算法.html">
+            
+                <a href="../Lab3/FIFO置换算法.html">
+            
+                    
+                    FIFO置换算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.9" data-path="../Lab3/项目组成与执行流.html">
+            
+                <a href="../Lab3/项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    LAB4：进程管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="实验目的.html">
+            
+                <a href="实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="实验内容.html">
+            
+                <a href="实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="练习.html">
+            
+                <a href="练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="进程与线程.html">
+            
+                <a href="进程与线程.html">
+            
+                    
+                    进程与线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.7.5" data-path="相关结构体.html">
+            
+                <a href="相关结构体.html">
+            
+                    
+                    相关结构体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.6" data-path="进程模块初始化.html">
+            
+                <a href="进程模块初始化.html">
+            
+                    
+                    进程模块初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.7" data-path="进程切换.html">
+            
+                <a href="进程切换.html">
+            
+                    
+                    进程切换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.8" data-path="项目组成与执行流.html">
+            
+                <a href="项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../Lab5/">
+            
+                <a href="../Lab5/">
+            
+                    
+                    LAB5
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../Lab5/实验目的.html">
+            
+                <a href="../Lab5/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../Lab5/实验内容.html">
+            
+                <a href="../Lab5/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../Lab6/">
+            
+                <a href="../Lab6/">
+            
+                    
+                    LAB6
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../Lab6/实验目的.html">
+            
+                <a href="../Lab6/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../Lab6/实验内容.html">
+            
+                <a href="../Lab6/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../Lab7/">
+            
+                <a href="../Lab7/">
+            
+                    
+                    LAB7
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../Lab7/实验目的.html">
+            
+                <a href="../Lab7/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../Lab7/实验内容.html">
+            
+                <a href="../Lab7/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../Lab8/">
+            
+                <a href="../Lab8/">
+            
+                    
+                    LAB8
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../Lab8/实验目的.html">
+            
+                <a href="../Lab8/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../Lab8/实验内容.html">
+            
+                <a href="../Lab8/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >相关结构体</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#&#x76F8;&#x5173;&#x7ED3;&#x6784;&#x4F53;"><b></b>&#x76F8;&#x5173;&#x7ED3;&#x6784;&#x4F53;</a></li><ul><li><span class="title-icon "></span><a href="#&#x8FDB;&#x7A0B;&#x63A7;&#x5236;&#x5757;"><b></b>&#x8FDB;&#x7A0B;&#x63A7;&#x5236;&#x5757;</a></li><li><span class="title-icon "></span><a href="#&#x8FDB;&#x7A0B;&#x4E0A;&#x4E0B;&#x6587;"><b></b>&#x8FDB;&#x7A0B;&#x4E0A;&#x4E0B;&#x6587;</a></li></ul></ul></div><a href="#&#x76F8;&#x5173;&#x7ED3;&#x6784;&#x4F53;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="&#x76F8;&#x5173;&#x7ED3;&#x6784;&#x4F53;"><a name="&#x76F8;&#x5173;&#x7ED3;&#x6784;&#x4F53;" class="anchor-navigation-ex-anchor" href="#&#x76F8;&#x5173;&#x7ED3;&#x6784;&#x4F53;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x76F8;&#x5173;&#x7ED3;&#x6784;&#x4F53;</h1>
+<p>&#x5728;&#x5B9E;&#x73B0;&#x548C;&#x8FDB;&#x7A0B;&#x76F8;&#x5173;&#x7684;&#x4EE3;&#x7801;&#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x4EEC;&#x5148;&#x6765;&#x5B9E;&#x73B0;&#x4E00;&#x4E9B;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x6765;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x5BF9;&#x4E8E;&#x8FDB;&#x7A0B;&#x8FDB;&#x884C;&#x7BA1;&#x7406;&#x3002;&#x5728;&#x672C;&#x7AE0;&#x5B9E;&#x73B0;&#x7684;&#x8FDB;&#x7A0B;&#x7BA1;&#x7406;&#x6A21;&#x578B;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x4E3B;&#x8981;&#x7EF4;&#x62A4;&#x4E24;&#x4E2A;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF1A;&#x8FDB;&#x7A0B;&#x63A7;&#x5236;&#x5757;&#x548C;&#x8FDB;&#x7A0B;&#x4E0A;&#x4E0B;&#x6587;&#x3002;&#x8FDB;&#x7A0B;&#x63A7;&#x5236;&#x5757;&#x7EF4;&#x62A4;&#x8FDB;&#x7A0B;&#x7684;&#x5404;&#x4E2A;&#x4FE1;&#x606F;&#xFF0C;&#x5305;&#x62EC;&#x5185;&#x5B58;&#x6620;&#x5C04;&#xFF0C;&#x8FDB;&#x7A0B;&#x540D;&#x7B49;&#x7B49;&#x3002;&#x8FDB;&#x7A0B;&#x4E0A;&#x4E0B;&#x6587;&#x91CC;&#x9762;&#x4FDD;&#x5B58;&#x4E86;&#x548C;&#x8FDB;&#x7A0B;&#x8FD0;&#x884C;&#x72B6;&#x6001;&#x76F8;&#x5173;&#x7684;&#x5404;&#x4E2A;&#x5BC4;&#x5B58;&#x5668;&#x7684;&#x503C;&#xFF0C;&#x8FD9;&#x4E9B;&#x662F;&#x4E3A;&#x4E86;&#x4E4B;&#x540E;&#x6062;&#x590D;&#x8FDB;&#x7A0B;&#x8FD0;&#x884C;&#x72B6;&#x6001;&#x7528;&#x7684;&#x3002;&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E00;&#x770B;&#x8FD9;&#x4E24;&#x4E2A;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x3002;</p>
+<h2 id="&#x8FDB;&#x7A0B;&#x63A7;&#x5236;&#x5757;"><a name="&#x8FDB;&#x7A0B;&#x63A7;&#x5236;&#x5757;" class="anchor-navigation-ex-anchor" href="#&#x8FDB;&#x7A0B;&#x63A7;&#x5236;&#x5757;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x8FDB;&#x7A0B;&#x63A7;&#x5236;&#x5757;</h2>
+<p>&#x6211;&#x4EEC;&#x5728;ucore&#x4E2D;&#x4F7F;&#x7528;&#x7ED3;&#x6784;&#x4F53;<code>struct proc_struct</code>&#x6765;&#x4FDD;&#x5B58;&#x548C;&#x8FDB;&#x7A0B;&#x76F8;&#x5173;&#x7684;&#x63A7;&#x5236;&#x4FE1;&#x606F;&#x3002;</p>
+<p><code>struct proc_struct</code>&#x5185;&#x90E8;&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre class="language-"><code class="lang-C">struct proc_struct {
+    enum proc_state state;                  // Process state
+    int pid;                                // Process ID
+    int runs;                               // the running times of Proces
+    uintptr_t kstack;                       // Process kernel stack
+    volatile bool need_resched;             // bool value: need to be rescheduled to release CPU?
+    struct proc_struct *parent;             // the parent process
+    struct mm_struct *mm;                   // Process&apos;s memory management field
+    struct context context;                 // Switch here to run process
+    struct trapframe *tf;                   // Trap frame for current interrupt
+    uintptr_t cr3;                          // CR3 register: the base addr of Page Directroy Table(PDT)
+    uint32_t flags;                         // Process flag
+    char name[PROC_NAME_LEN + 1];           // Process name
+    list_entry_t list_link;                 // Process link list 
+    list_entry_t hash_link;                 // Process hash list
+};
+</code></pre>
+<p>&#x8FD9;&#x91CC;&#x9762;&#x503C;&#x5F97;&#x6211;&#x4EEC;&#x5173;&#x6CE8;&#x7684;&#x4E3B;&#x8981;&#x6709;&#x4EE5;&#x4E0B;&#x51E0;&#x4E2A;&#x6210;&#x5458;&#x53D8;&#x91CF;&#xFF1A;</p>
+<ul>
+<li><code>parent</code>&#xFF1A;&#x91CC;&#x9762;&#x4FDD;&#x5B58;&#x4E86;&#x8FDB;&#x7A0B;&#x7684;&#x7236;&#x8FDB;&#x7A0B;&#x7684;&#x6307;&#x9488;&#x3002;&#x5728;&#x5185;&#x6838;&#x4E2D;&#xFF0C;&#x53EA;&#x6709;&#x5185;&#x6838;&#x521B;&#x5EFA;&#x7684;idle&#x8FDB;&#x7A0B;&#x6CA1;&#x6709;&#x7236;&#x8FDB;&#x7A0B;&#xFF0C;&#x5176;&#x4ED6;&#x8FDB;&#x7A0B;&#x90FD;&#x6709;&#x7236;&#x8FDB;&#x7A0B;&#x3002;&#x8FDB;&#x7A0B;&#x7684;&#x7236;&#x5B50;&#x5173;&#x7CFB;&#x7EC4;&#x6210;&#x4E86;&#x4E00;&#x68F5;&#x8FDB;&#x7A0B;&#x6811;&#xFF0C;&#x8FD9;&#x79CD;&#x7236;&#x5B50;&#x5173;&#x7CFB;&#x6709;&#x5229;&#x4E8E;&#x7EF4;&#x62A4;&#x7236;&#x8FDB;&#x7A0B;&#x5BF9;&#x4E8E;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x4E00;&#x4E9B;&#x7279;&#x6B8A;&#x64CD;&#x4F5C;&#x3002;</li>
+<li><code>mm</code>&#xFF1A;&#x8FD9;&#x91CC;&#x9762;&#x4FDD;&#x5B58;&#x4E86;&#x5185;&#x5B58;&#x7BA1;&#x7406;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x5305;&#x62EC;&#x5185;&#x5B58;&#x6620;&#x5C04;&#xFF0C;&#x865A;&#x5B58;&#x7BA1;&#x7406;&#x7B49;&#x5185;&#x5BB9;&#x3002;&#x5177;&#x4F53;&#x5185;&#x5728;&#x5B9E;&#x73B0;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x4E4B;&#x524D;&#x7684;&#x7AE0;&#x8282;&#x3002;</li>
+<li><code>context</code>&#xFF1A;<code>context</code>&#x4E2D;&#x4FDD;&#x5B58;&#x4E86;&#x8FDB;&#x7A0B;&#x6267;&#x884C;&#x7684;&#x4E0A;&#x4E0B;&#x6587;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x51E0;&#x4E2A;&#x5173;&#x952E;&#x7684;&#x5BC4;&#x5B58;&#x5668;&#x7684;&#x503C;&#x3002;&#x8FD9;&#x4E9B;&#x5BC4;&#x5B58;&#x5668;&#x7684;&#x503C;&#x7528;&#x4E8E;&#x5728;&#x8FDB;&#x7A0B;&#x5207;&#x6362;&#x4E2D;&#x8FD8;&#x539F;&#x4E4B;&#x524D;&#x8FDB;&#x7A0B;&#x7684;&#x8FD0;&#x884C;&#x72B6;&#x6001;&#xFF08;&#x8FDB;&#x7A0B;&#x5207;&#x6362;&#x7684;&#x8BE6;&#x7EC6;&#x8FC7;&#x7A0B;&#x5728;&#x540E;&#x9762;&#x4F1A;&#x4ECB;&#x7ECD;&#xFF09;&#x3002;&#x5207;&#x6362;&#x8FC7;&#x7A0B;&#x7684;&#x5B9E;&#x73B0;&#x5728;<code>kern/process/switch.S</code>&#x3002;</li>
+<li><code>tf</code>&#xFF1A;<code>tf</code>&#x91CC;&#x4FDD;&#x5B58;&#x4E86;&#x8FDB;&#x7A0B;&#x7684;&#x4E2D;&#x65AD;&#x5E27;&#x3002;&#x5F53;&#x8FDB;&#x7A0B;&#x4ECE;&#x7528;&#x6237;&#x7A7A;&#x95F4;&#x8DF3;&#x8FDB;&#x5185;&#x6838;&#x7A7A;&#x95F4;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8FDB;&#x7A0B;&#x7684;&#x6267;&#x884C;&#x72B6;&#x6001;&#x88AB;&#x4FDD;&#x5B58;&#x5728;&#x4E86;&#x4E2D;&#x65AD;&#x5E27;&#x4E2D;&#xFF08;&#x6CE8;&#x610F;&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x4FDD;&#x5B58;&#x7684;&#x6267;&#x884C;&#x72B6;&#x6001;&#x6570;&#x91CF;&#x4E0D;&#x540C;&#x4E8E;&#x4E0A;&#x4E0B;&#x6587;&#x5207;&#x6362;&#xFF09;&#x3002;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x53EF;&#x80FD;&#x4F1A;&#x6539;&#x53D8;&#x7528;&#x6237;&#x5BC4;&#x5B58;&#x5668;&#x7684;&#x503C;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8C03;&#x6574;&#x4E2D;&#x65AD;&#x5E27;&#x6765;&#x4F7F;&#x5F97;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x8FD4;&#x56DE;&#x7279;&#x5B9A;&#x7684;&#x503C;&#x3002;</li>
+<li><code>cr3</code>&#xFF1A;<code>cr3</code>&#x5BC4;&#x5B58;&#x5668;&#x662F;x86&#x67B6;&#x6784;&#x7684;&#x7279;&#x6B8A;&#x5BC4;&#x5B58;&#x5668;&#xFF0C;&#x7528;&#x6765;&#x4FDD;&#x5B58;&#x9875;&#x8868;&#x6240;&#x5728;&#x7684;&#x57FA;&#x5740;&#x3002;&#x51FA;&#x4E8E;legacy&#x7684;&#x539F;&#x56E0;&#xFF0C;&#x6211;&#x4EEC;&#x8FD9;&#x91CC;&#x4ECD;&#x7136;&#x4FDD;&#x7559;&#x4E86;&#x8FD9;&#x4E2A;&#x540D;&#x5B57;&#xFF0C;&#x4F46;&#x5176;&#x503C;&#x4ECD;&#x7136;&#x662F;&#x9875;&#x8868;&#x57FA;&#x5740;&#x6240;&#x5728;&#x7684;&#x4F4D;&#x7F6E;&#x3002;</li>
+</ul>
+<h2 id="&#x8FDB;&#x7A0B;&#x4E0A;&#x4E0B;&#x6587;"><a name="&#x8FDB;&#x7A0B;&#x4E0A;&#x4E0B;&#x6587;" class="anchor-navigation-ex-anchor" href="#&#x8FDB;&#x7A0B;&#x4E0A;&#x4E0B;&#x6587;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x8FDB;&#x7A0B;&#x4E0A;&#x4E0B;&#x6587;</h2>
+<p>&#x8FDB;&#x7A0B;&#x4E0A;&#x4E0B;&#x6587;&#x4F7F;&#x7528;&#x7ED3;&#x6784;&#x4F53;<code>struct context</code>&#x4FDD;&#x5B58;&#xFF0C;&#x5176;&#x4E2D;&#x5305;&#x542B;&#x4E86;<code>ra</code>&#xFF0C;<code>sp</code>&#xFF0C;<code>s0~s11</code>&#x5171;14&#x4E2A;&#x5BC4;&#x5B58;&#x5668;&#x3002;</p>
+<p>&#x53EF;&#x80FD;&#x611F;&#x5174;&#x8DA3;&#x7684;&#x540C;&#x5B66;&#x5C31;&#x4F1A;&#x95EE;&#x4E86;&#xFF0C;&#x4E3A;&#x4EC0;&#x4E48;&#x6211;&#x4EEC;&#x4E0D;&#x9700;&#x8981;&#x4FDD;&#x5B58;&#x6240;&#x6709;&#x7684;&#x5BC4;&#x5B58;&#x5668;&#x5462;&#xFF1F;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x5DE7;&#x5999;&#x5730;&#x5229;&#x7528;&#x4E86;&#x7F16;&#x8BD1;&#x5668;&#x5BF9;&#x4E8E;&#x51FD;&#x6570;&#x7684;&#x5904;&#x7406;&#x3002;&#x6211;&#x4EEC;&#x77E5;&#x9053;&#x5BC4;&#x5B58;&#x5668;&#x53EF;&#x4EE5;&#x5206;&#x4E3A;&#x8C03;&#x7528;&#x8005;&#x4FDD;&#x5B58;&#xFF08;caller-saved&#xFF09;&#x5BC4;&#x5B58;&#x5668;&#x548C;&#x88AB;&#x8C03;&#x7528;&#x8005;&#x4FDD;&#x5B58;&#xFF08;callee-saved&#xFF09;&#x5BC4;&#x5B58;&#x5668;&#x3002;&#x56E0;&#x4E3A;&#x7EBF;&#x7A0B;&#x5207;&#x6362;&#x5728;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x5F53;&#x4E2D;&#xFF08;&#x6211;&#x4EEC;&#x4E0B;&#x4E00;&#x5C0F;&#x8282;&#x5C31;&#x4F1A;&#x770B;&#x5230;&#xFF09;&#xFF0C;&#x6240;&#x4EE5;&#x7F16;&#x8BD1;&#x5668;&#x4F1A;&#x81EA;&#x52A8;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x751F;&#x6210;&#x4FDD;&#x5B58;&#x548C;&#x6062;&#x590D;&#x8C03;&#x7528;&#x8005;&#x4FDD;&#x5B58;&#x5BC4;&#x5B58;&#x5668;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x5728;&#x5B9E;&#x9645;&#x7684;&#x8FDB;&#x7A0B;&#x5207;&#x6362;&#x8FC7;&#x7A0B;&#x4E2D;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x4FDD;&#x5B58;&#x88AB;&#x8C03;&#x7528;&#x8005;&#x4FDD;&#x5B58;&#x5BC4;&#x5B58;&#x5668;&#x5C31;&#x597D;&#x5566;&#xFF01; </p>
+<footer class="page-footer"><span class="copyright">Copyright &#xA9;  2020 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x6700;&#x540E;&#x4FEE;&#x8BA2;&#x4E8E;&#xFF1A;
+2020-08-19 10:30:43
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="进程与线程.html" class="navigation navigation-prev " aria-label="Previous page: 进程与线程">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="进程模块初始化.html" class="navigation navigation-next " aria-label="Next page: 进程模块初始化">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"相关结构体","level":"1.7.5","depth":2,"next":{"title":"进程模块初始化","level":"1.7.6","depth":2,"path":"Lab4/进程模块初始化.md","ref":"Lab4/进程模块初始化.md","articles":[]},"previous":{"title":"进程与线程","level":"1.7.4","depth":2,"path":"Lab4/进程与线程.md","ref":"Lab4/进程与线程.md","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-comscore","prism","-highlight","copy-code-button","search-pro","-search","-lunr","expandable-chapters","chapter-fold","splitter","github-buttons","tbfed-pagefooter","baidu-tongji","anchor-navigation-ex","favicon","-sharing","sharing-plus","flexible-alerts","livereload"],"styles":{"website":"./public-repertory/css/gitbook-configure.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy  2020","modify_label":"最后修订于：","modify_format":"YYYY-MM-DD HH:mm:ss"},"chapter-fold":{},"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"shell":"bash"}},"livereload":{},"baidu-tongji":{"url":"https://hm.baidu.com/hm.js","token":"55e7dfe47f4dc1c018d4042fdfa62565"},"splitter":{},"search-pro":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"showLevel":false,"associatedWithSummary":true,"mode":"float","showGoTop":true,"printLog":false,"multipleH1":true,"float":{"floatIcon":"fa fa-navicon","showLevelIcon":false,"level1Icon":"","level2Icon":"","level3Icon":""},"pageTop":{"showLevelIcon":false,"level1Icon":"","level2Icon":"","level3Icon":""}},"favicon":{"shortcut":"asset/img/favicon.ico","bookmark":"asset/img/favicon.ico","appleTouch":"asset/img/favicon.ico","appleTochMore":{"120*120":"asset/img/favicon.ico","180*180":"asset/img/favicon.ico"}},"theme-comscore":{},"github-buttons":{"buttons":[{"user":"nkgongxl","repo":"ucoreonrv","type":"star","count":true,"size":"small"},{"user":"KeLee5453","width":"160","type":"follow","count":true,"size":"small"}]},"flexible-alerts":{"style":"callout","note":{"label":"Note","icon":"fa fa-info-circle","className":"info"},"tip":{"label":"Tip","icon":"fa fa-lightbulb-o","className":"tip"},"warning":{"label":"Warning","icon":"fa fa-exclamation-triangle","className":"warning"},"danger":{"label":"Attention","icon":"fa fa-ban","className":"danger"}},"copy-code-button":{},"sharing":{"qq":true,"all":["douban","facebook","google","instapaper","linkedin","twitter","weibo","messenger","qq","qzone","viber","whatsapp"],"douban":false,"facebook":false,"weibo":true,"twitter":true,"pocket":false,"google":true,"qzone":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"theme":"default","author":"KeLee","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"uCore OS(on RISC-V32)实验指导书","language":"zh-hans","gitbook":"*","description":""},"file":{"path":"Lab4/相关结构体.md","mtime":"2020-08-19T02:30:43.806Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-19T02:55:32.550Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-baidu-tongji/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing-plus/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-flexible-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-comscore/test.js"></script>
+        
+    
+
+    </body>
+</html>
+
