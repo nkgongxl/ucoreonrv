@@ -1,0 +1,1565 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>用户进程的退出和等待 · uCore OS(on RISC-V32)实验指导书</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="KeLee">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-flexible-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-comscore/test.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+
+        
+    
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="项目组成与执行流.html" />
+    
+    
+    <link rel="prev" href="系统调用.html" />
+    
+
+    
+        <link rel="shortcut icon" href='../asset/img/favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../asset/img/favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="apple-touch-icon" href='../asset/img/favicon.ico'>
+    
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"nkgongxl","repo":"ucoreonrv","type":"star","count":true,"size":"small"},{"user":"KeLee5453","width":"160","type":"follow","count":true,"size":"small"}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../Lab0/">
+            
+                <a href="../Lab0/">
+            
+                    
+                    LAB0：ready~go!
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../Lab0/实验目的.html">
+            
+                <a href="../Lab0/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../Lab0/实验内容.html">
+            
+                <a href="../Lab0/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../Lab0/前导知识.html">
+            
+                <a href="../Lab0/前导知识.html">
+            
+                    
+                    前导知识
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.3.1" data-path="../Lab0/前导知识/了解uCore.html">
+            
+                <a href="../Lab0/前导知识/了解uCore.html">
+            
+                    
+                    了解uCore
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.2" data-path="../Lab0/前导知识/了解RISC-V.html">
+            
+                <a href="../Lab0/前导知识/了解RISC-V.html">
+            
+                    
+                    了解RISC-V
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.3" data-path="../Lab0/前导知识/了解OS实验.html">
+            
+                <a href="../Lab0/前导知识/了解OS实验.html">
+            
+                    
+                    了解OS实验
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.4" data-path="../Lab0/前导知识/了解实验环境.html">
+            
+                <a href="../Lab0/前导知识/了解实验环境.html">
+            
+                    
+                    了解实验环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.5" data-path="../Lab0/前导知识/了解开发调试基本工具.html">
+            
+                <a href="../Lab0/前导知识/了解开发调试基本工具.html">
+            
+                    
+                    了解开发调试基本工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.6" data-path="../Lab0/前导知识/了解硬件模拟器.html">
+            
+                <a href="../Lab0/前导知识/了解硬件模拟器.html">
+            
+                    
+                    了解硬件模拟器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../Lab0/配置环境.html">
+            
+                <a href="../Lab0/配置环境.html">
+            
+                    
+                    配置环境
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.4.1" data-path="../Lab0/配置环境/安装虚拟环境.html">
+            
+                <a href="../Lab0/配置环境/安装虚拟环境.html">
+            
+                    
+                    安装虚拟环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.2" data-path="../Lab0/配置环境/安装开发工具.html">
+            
+                <a href="../Lab0/配置环境/安装开发工具.html">
+            
+                    
+                    安装开发工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.3" data-path="../Lab0/配置环境/安装硬件模拟器.html">
+            
+                <a href="../Lab0/配置环境/安装硬件模拟器.html">
+            
+                    
+                    安装硬件模拟器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.4" data-path="../Lab0/配置环境/安装调试工具.html">
+            
+                <a href="../Lab0/配置环境/安装调试工具.html">
+            
+                    
+                    安装调试工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../Lab0.5/">
+            
+                <a href="../Lab0.5/">
+            
+                    
+                    LAB0.5：最小可执行内核
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../Lab0.5/实验目的.html">
+            
+                <a href="../Lab0.5/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../Lab0.5/实验内容.html">
+            
+                <a href="../Lab0.5/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../Lab0.5/练习.html">
+            
+                <a href="../Lab0.5/练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../Lab0.5/内存布局.html">
+            
+                <a href="../Lab0.5/内存布局.html">
+            
+                    
+                    内存布局
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../Lab0.5/链接脚本.html">
+            
+                <a href="../Lab0.5/链接脚本.html">
+            
+                    
+                    链接脚本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../Lab0.5/真正的入口点.html">
+            
+                <a href="../Lab0.5/真正的入口点.html">
+            
+                    
+                    真正的入口点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../Lab0.5/从SBI到stdio.html">
+            
+                <a href="../Lab0.5/从SBI到stdio.html">
+            
+                    
+                    从SBI到stdio
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../Lab0.5/编译运行.html">
+            
+                <a href="../Lab0.5/编译运行.html">
+            
+                    
+                    编译运行
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../Lab0.5/项目组成与执行流.html">
+            
+                <a href="../Lab0.5/项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../Lab1/">
+            
+                <a href="../Lab1/">
+            
+                    
+                    LAB1：中断机制
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../Lab1/实验目的.html">
+            
+                <a href="../Lab1/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../Lab1/实验内容.html">
+            
+                <a href="../Lab1/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../Lab1/练习.html">
+            
+                <a href="../Lab1/练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../Lab1/RISC-V中断相关.html">
+            
+                <a href="../Lab1/RISC-V中断相关.html">
+            
+                    
+                    RISC-V中断相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../Lab1/上下文处理.html">
+            
+                <a href="../Lab1/上下文处理.html">
+            
+                    
+                    上下文处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../Lab1/中断处理程序.html">
+            
+                <a href="../Lab1/中断处理程序.html">
+            
+                    
+                    中断处理程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../Lab1/时钟中断.html">
+            
+                <a href="../Lab1/时钟中断.html">
+            
+                    
+                    时钟中断
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../Lab1/项目组成与执行流.html">
+            
+                <a href="../Lab1/项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../Lab2/">
+            
+                <a href="../Lab2/">
+            
+                    
+                    LAB2：物理内存管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Lab2/实验目的.html">
+            
+                <a href="../Lab2/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../Lab2/实验内容.html">
+            
+                <a href="../Lab2/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../Lab2/练习.html">
+            
+                <a href="../Lab2/练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../Lab2/地址与页表.html">
+            
+                <a href="../Lab2/地址与页表.html">
+            
+                    
+                    地址与页表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../Lab2/物理内存探测.html">
+            
+                <a href="../Lab2/物理内存探测.html">
+            
+                    
+                    物理内存探测
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../Lab2/以页为单位管理物理内存.html">
+            
+                <a href="../Lab2/以页为单位管理物理内存.html">
+            
+                    
+                    以页为单位管理物理内存
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../Lab2/页面分配算法.html">
+            
+                <a href="../Lab2/页面分配算法.html">
+            
+                    
+                    页面分配算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="../Lab2/项目组成与执行流.html">
+            
+                <a href="../Lab2/项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../Lab3/">
+            
+                <a href="../Lab3/">
+            
+                    
+                    LAB3：虚拟内存管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../Lab3/实验目的.html">
+            
+                <a href="../Lab3/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../Lab3/实验内容.html">
+            
+                <a href="../Lab3/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../Lab3/练习.html">
+            
+                <a href="../Lab3/练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../Lab3/页面置换.html">
+            
+                <a href="../Lab3/页面置换.html">
+            
+                    
+                    页面置换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../Lab3/PageFault.html">
+            
+                <a href="../Lab3/PageFault.html">
+            
+                    
+                    PageFault
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.6" data-path="../Lab3/使用多级页表.html">
+            
+                <a href="../Lab3/使用多级页表.html">
+            
+                    
+                    使用多级页表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.7" data-path="../Lab3/页面置换机制.html">
+            
+                <a href="../Lab3/页面置换机制.html">
+            
+                    
+                    页面置换机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.8" data-path="../Lab3/FIFO置换算法.html">
+            
+                <a href="../Lab3/FIFO置换算法.html">
+            
+                    
+                    FIFO置换算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.9" data-path="../Lab3/项目组成与执行流.html">
+            
+                <a href="../Lab3/项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../Lab4/">
+            
+                <a href="../Lab4/">
+            
+                    
+                    LAB4：进程管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../Lab4/实验目的.html">
+            
+                <a href="../Lab4/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../Lab4/实验内容.html">
+            
+                <a href="../Lab4/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../Lab4/练习.html">
+            
+                <a href="../Lab4/练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../Lab4/进程与线程.html">
+            
+                <a href="../Lab4/进程与线程.html">
+            
+                    
+                    进程与线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="../Lab4/相关结构体.html">
+            
+                <a href="../Lab4/相关结构体.html">
+            
+                    
+                    相关结构体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.6" data-path="../Lab4/进程模块初始化.html">
+            
+                <a href="../Lab4/进程模块初始化.html">
+            
+                    
+                    进程模块初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.7" data-path="../Lab4/进程切换.html">
+            
+                <a href="../Lab4/进程切换.html">
+            
+                    
+                    进程切换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.8" data-path="../Lab4/项目组成与执行流.html">
+            
+                <a href="../Lab4/项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    LAB5：用户程序
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="实验目的.html">
+            
+                <a href="实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="实验内容.html">
+            
+                <a href="实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="练习.html">
+            
+                <a href="练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="用户进程.html">
+            
+                <a href="用户进程.html">
+            
+                    
+                    用户进程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="用户程序.html">
+            
+                <a href="用户程序.html">
+            
+                    
+                    用户程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="创建并执行用户进程.html">
+            
+                <a href="创建并执行用户进程.html">
+            
+                    
+                    创建并执行用户进程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="系统调用.html">
+            
+                <a href="系统调用.html">
+            
+                    
+                    系统调用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.8.8" data-path="用户进程的退出和等待.html">
+            
+                <a href="用户进程的退出和等待.html">
+            
+                    
+                    用户进程的退出和等待
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="项目组成与执行流.html">
+            
+                <a href="项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../Lab6/">
+            
+                <a href="../Lab6/">
+            
+                    
+                    LAB6
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../Lab6/实验目的.html">
+            
+                <a href="../Lab6/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../Lab6/实验内容.html">
+            
+                <a href="../Lab6/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../Lab7/">
+            
+                <a href="../Lab7/">
+            
+                    
+                    LAB7
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../Lab7/实验目的.html">
+            
+                <a href="../Lab7/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../Lab7/实验内容.html">
+            
+                <a href="../Lab7/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../Lab8/">
+            
+                <a href="../Lab8/">
+            
+                    
+                    LAB8
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../Lab8/实验目的.html">
+            
+                <a href="../Lab8/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../Lab8/实验内容.html">
+            
+                <a href="../Lab8/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >用户进程的退出和等待</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x7684;&#x9000;&#x51FA;&#x548C;&#x7B49;&#x5F85;"><b></b>&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x7684;&#x9000;&#x51FA;&#x548C;&#x7B49;&#x5F85;</a></li><ul><li><span class="title-icon "></span><a href="#&#x9000;&#x51FA;"><b></b>&#x9000;&#x51FA;</a></li><li><span class="title-icon "></span><a href="#&#x7B49;&#x5F85;"><b></b>&#x7B49;&#x5F85;</a></li></ul></ul></div><a href="#&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x7684;&#x9000;&#x51FA;&#x548C;&#x7B49;&#x5F85;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x7684;&#x9000;&#x51FA;&#x548C;&#x7B49;&#x5F85;"><a name="&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x7684;&#x9000;&#x51FA;&#x548C;&#x7B49;&#x5F85;" class="anchor-navigation-ex-anchor" href="#&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x7684;&#x9000;&#x51FA;&#x548C;&#x7B49;&#x5F85;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x7684;&#x9000;&#x51FA;&#x548C;&#x7B49;&#x5F85;</h1>
+<h2 id="&#x9000;&#x51FA;"><a name="&#x9000;&#x51FA;" class="anchor-navigation-ex-anchor" href="#&#x9000;&#x51FA;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x9000;&#x51FA;</h2>
+<p>&#x5728;&#x8FDB;&#x7A0B;&#x6267;&#x884C;&#x5B8C;&#x5DE5;&#x4F5C;&#x540E;&#xFF0C;&#x9700;&#x8981;&#x9000;&#x51FA;&#xFF0C;&#x91CA;&#x653E;&#x8D44;&#x6E90;&#xFF0C;&#x6B63;&#x6211;&#x4EEC;&#x5728;<code>do_execve</code>&#x51FD;&#x6570;&#x672B;&#x5C3E;&#x770B;&#x5230;&#x7684;&#x4E00;&#x6837;&#xFF0C;&#x9000;&#x51FA;&#x8FDB;&#x7A0B;&#x662F;&#x8C03;&#x7528;<code>do_exit</code>&#x51FD;&#x6570;&#x6765;&#x5B9E;&#x73B0;&#x7684;&#x3002;</p>
+<pre class="language-"><code class="lang-c">execve_exit<span class="token operator">:</span>
+    <span class="token function">do_exit</span><span class="token punctuation">(</span>ret<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">&quot;already exit: %e.\n&quot;</span><span class="token punctuation">,</span> ret<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<pre class="language-"><code class="lang-c"><span class="token comment">// do_exit - called by sys_exit</span>
+<span class="token comment">//   1. call exit_mmap &amp; put_pgdir &amp; mm_destroy to free the almost all memory space of process</span>
+<span class="token comment">//   2. set process&apos; state as PROC_ZOMBIE, then call wakeup_proc(parent) to ask parent reclaim itself.</span>
+<span class="token comment">//   3. call scheduler to switch to other process</span>
+<span class="token keyword">int</span>
+<span class="token function">do_exit</span><span class="token punctuation">(</span><span class="token keyword">int</span> error_code<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>current <span class="token operator">==</span> idleproc<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">&quot;idleproc exit.\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>current <span class="token operator">==</span> initproc<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">&quot;initproc exit.\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">struct</span> <span class="token class-name">mm_struct</span> <span class="token operator">*</span>mm <span class="token operator">=</span> current<span class="token operator">-&gt;</span>mm<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>mm <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">lcr3</span><span class="token punctuation">(</span>boot_cr3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">mm_count_dec</span><span class="token punctuation">(</span>mm<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">exit_mmap</span><span class="token punctuation">(</span>mm<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">put_pgdir</span><span class="token punctuation">(</span>mm<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">mm_destroy</span><span class="token punctuation">(</span>mm<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        current<span class="token operator">-&gt;</span>mm <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    current<span class="token operator">-&gt;</span>state <span class="token operator">=</span> PROC_ZOMBIE<span class="token punctuation">;</span>
+    current<span class="token operator">-&gt;</span>exit_code <span class="token operator">=</span> error_code<span class="token punctuation">;</span>
+    bool intr_flag<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">proc_struct</span> <span class="token operator">*</span>proc<span class="token punctuation">;</span>
+    <span class="token function">local_intr_save</span><span class="token punctuation">(</span>intr_flag<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">{</span>
+        proc <span class="token operator">=</span> current<span class="token operator">-&gt;</span>parent<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>proc<span class="token operator">-&gt;</span>wait_state <span class="token operator">==</span> WT_CHILD<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">wakeup_proc</span><span class="token punctuation">(</span>proc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>current<span class="token operator">-&gt;</span>cptr <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            proc <span class="token operator">=</span> current<span class="token operator">-&gt;</span>cptr<span class="token punctuation">;</span>
+            current<span class="token operator">-&gt;</span>cptr <span class="token operator">=</span> proc<span class="token operator">-&gt;</span>optr<span class="token punctuation">;</span>
+
+            proc<span class="token operator">-&gt;</span>yptr <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>proc<span class="token operator">-&gt;</span>optr <span class="token operator">=</span> initproc<span class="token operator">-&gt;</span>cptr<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                initproc<span class="token operator">-&gt;</span>cptr<span class="token operator">-&gt;</span>yptr <span class="token operator">=</span> proc<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            proc<span class="token operator">-&gt;</span>parent <span class="token operator">=</span> initproc<span class="token punctuation">;</span>
+            initproc<span class="token operator">-&gt;</span>cptr <span class="token operator">=</span> proc<span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>proc<span class="token operator">-&gt;</span>state <span class="token operator">==</span> PROC_ZOMBIE<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>initproc<span class="token operator">-&gt;</span>wait_state <span class="token operator">==</span> WT_CHILD<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token function">wakeup_proc</span><span class="token punctuation">(</span>initproc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">local_intr_restore</span><span class="token punctuation">(</span>intr_flag<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">schedule</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">&quot;do_exit will not return!! %d.\n&quot;</span><span class="token punctuation">,</span> current<span class="token operator">-&gt;</span>pid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ol>
+<li>&#x5982;&#x679C;&#x662F;&#x5185;&#x6838;&#x7EBF;&#x7A0B;&#x5219;&#x4E0D;&#x9700;&#x8981;&#x56DE;&#x6536;&#x7A7A;&#x95F4;</li>
+<li>&#x5982;&#x679C;&#x662F;&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#xFF0C;&#x5C31;&#x5F00;&#x59CB;&#x56DE;&#x6536;&#xFF0C;&#x9996;&#x5148;&#x6267;&#x884C;<code>lcr3(boot_cr3);</code>&#x5207;&#x6362;&#x5230;&#x5185;&#x6838;&#x7684;&#x9875;&#x8868;&#x4E0A;&#xFF0C;&#x8FD9;&#x6837;&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x5C31;&#x53EA;&#x80FD;&#x5728;&#x5185;&#x6838;&#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;&#x7A7A;&#x95F4;&#x4E0A;&#x6267;&#x884C;&#xFF0C;&#x56E0;&#x4E3A;&#x5185;&#x6838;&#x6743;&#x9650;&#x9AD8;&#x3002;&#x5982;&#x679C;&#x5F53;&#x524D;&#x8FDB;&#x7A0B;&#x7684;&#x88AB;&#x8C03;&#x7528;&#x6570;&#x51CF;&#x4E00;&#x540E;&#x7B49;&#x4E8E;0&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x6CA1;&#x6709;&#x5176;&#x4ED6;&#x8FDB;&#x7A0B;&#x5728;&#x4F7F;&#x7528;&#x4E86;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x56DE;&#x6536;&#xFF0C;&#x5148;&#x56DE;&#x6536;&#x5185;&#x5B58;&#x8D44;&#x6E90;&#xFF0C;&#x8C03;&#x7528;<code>exit_mmap</code>&#x51FD;&#x6570;&#x91CA;&#x653E;<code>mm</code>&#x4E2D;&#x7684;<code>vma</code>&#x63CF;&#x8FF0;&#x7684;&#x8FDB;&#x7A0B;&#x5408;&#x6CD5;&#x7A7A;&#x95F4;&#x4E2D;&#x5B9E;&#x9645;&#x5206;&#x914D;&#x7684;&#x5185;&#x5B58;&#xFF0C;&#x7136;&#x540E;&#x628A;&#x5BF9;&#x5E94;&#x7684;&#x9875;&#x8868;&#x9879;&#x5185;&#x5BB9;&#x6E05;&#x7A7A;&#xFF0C;&#x6700;&#x540E;&#x628A;&#x9875;&#x8868;&#x9879;&#x548C;&#x9875;&#x76EE;&#x5F55;&#x8868;&#x6E05;&#x7A7A;&#x3002;&#x7136;&#x540E;&#x8C03;&#x7528;<code>put_pgdir</code>&#x51FD;&#x6570;&#x91CA;&#x653E;&#x9875;&#x76EE;&#x5F55;&#x8868;&#x6240;&#x5360;&#x7528;&#x7684;&#x5185;&#x5B58;&#x3002;&#x6700;&#x540E;&#x8C03;&#x7528;<code>mm_destroy</code>&#x91CA;&#x653E;<code>vma</code>&#x4E0E;<code>mm</code>&#x7684;&#x5185;&#x5B58;&#x3002;&#x628A;<code>mm</code>&#x7F6E;&#x4E3A;NULL&#xFF0C;&#x8868;&#x793A;&#x4E0E;&#x5F53;&#x524D;&#x8FDB;&#x7A0B;&#x76F8;&#x5173;&#x7684;&#x7528;&#x6237;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x548C;&#x5BF9;&#x5E94;&#x7684;&#x5185;&#x5B58;&#x7BA1; &#x7406;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x6240;&#x5360;&#x7684;&#x5185;&#x6838;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x5DF2;&#x7ECF;&#x56DE;&#x6536;&#x5B8C;&#x6BD5;&#xFF1B;</li>
+<li>&#x8BBE;&#x7F6E;&#x8FDB;&#x7A0B;&#x7684;&#x72B6;&#x6001;&#x4E3A;<code>PROC_ZOMBIE</code>&#x8868;&#x793A;&#x8BE5;&#x8FDB;&#x7A0B;&#x8981;&#x6B7B;&#x4E86;&#xFF0C;&#x7B49;&#x5F85;&#x7236;&#x8FDB;&#x7A0B;&#x6765;&#x56DE;&#x6536;&#x8D44;&#x6E90;&#xFF0C;&#x56DE;&#x6536;&#x5185;&#x6838;&#x6808;&#x548C;&#x8FDB;&#x7A0B;&#x63A7;&#x5236;&#x5757;&#x3002;&#x5F53;&#x524D;&#x8FDB;&#x7A0B;&#x7684;&#x9000;&#x51FA;&#x7801;&#x4E3A;<code>error_code</code>&#x8868;&#x793A;&#x8BE5;&#x8FDB;&#x7A0B;&#x5DF2;&#x7ECF;&#x4E0D;&#x80FD;&#x88AB;&#x8C03;&#x5EA6;&#x3002;</li>
+<li>&#x5982;&#x679C;&#x5F53;&#x524D;&#x8FDB;&#x7A0B;&#x7684;&#x7236;&#x8FDB;&#x7A0B;&#x5904;&#x4E8E;&#x7B49;&#x5F85;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x5219;&#x5524;&#x9192;&#x7236;&#x8FDB;&#x7A0B;&#x8BA9;&#x7236;&#x8FDB;&#x7A0B;&#x56DE;&#x6536;&#x8D44;&#x6E90;&#x3002;</li>
+<li>&#x5982;&#x679C;&#x8BE5;&#x8FDB;&#x7A0B;&#x8FD8;&#x6709;&#x5B50;&#x8FDB;&#x7A0B;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x6307;&#x5411;&#x7B2C;&#x4E00;&#x4E2A;&#x5B69;&#x5B50;&#xFF0C;&#x628A;&#x540E;&#x9762;&#x7684;&#x5B69;&#x5B50;&#x5168;&#x90E8;&#x7F6E;&#x4E3A;&#x7A7A;&#xFF0C;&#x7136;&#x540E;&#x628A;&#x5B69;&#x5B50;&#x8FC7;&#x7EE7;&#x7ED9;&#x5185;&#x6838;&#x7EBF;&#x7A0B;<code>initproc</code>&#xFF0C;&#x628A;&#x5B50;&#x8FDB;&#x7A0B;&#x63D2;&#x5165;&#x5230;<code>initproc</code>&#x7684;&#x5B69;&#x5B50;&#x94FE;&#x8868;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x67D0;&#x4E2A;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x72B6;&#x6001;&#x65F6;&#x8981;&#x6B7B;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x5E76;&#x4E14;<code>initproc</code>&#x7684;&#x72B6;&#x6001;&#x65F6;&#x7B49;&#x5F85;&#x5B69;&#x5B50;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x5219;&#x5524;&#x9192;<code>initproc</code>&#x6765;&#x56DE;&#x6536;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x8D44;&#x6E90;&#x3002;</li>
+<li>&#x7136;&#x540E;&#x5F00;&#x542F;&#x4E2D;&#x65AD;&#xFF0C;&#x6267;&#x884C;<code>schedule</code>&#x51FD;&#x6570;&#xFF0C;&#x9009;&#x62E9;&#x65B0;&#x7684;&#x8FDB;&#x7A0B;&#x6267;&#x884C;</li>
+</ol>
+<h2 id="&#x7B49;&#x5F85;"><a name="&#x7B49;&#x5F85;" class="anchor-navigation-ex-anchor" href="#&#x7B49;&#x5F85;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x7B49;&#x5F85;</h2>
+<p>&#x90A3;&#x4E48;&#x7236;&#x8FDB;&#x7A0B;&#x5982;&#x4F55;&#x5B8C;&#x6210;&#x5BF9;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x6700;&#x540E;&#x56DE;&#x6536;&#x5DE5;&#x4F5C;&#x5462;&#xFF1F;&#x8FD9;&#x8981;&#x6C42;&#x7236;&#x8FDB;&#x7A0B;&#x8981;&#x6267;&#x884C;<code>wait</code>&#x7528;&#x6237;&#x51FD;&#x6570;&#x6216;<code>wait_pid</code>&#x7528;&#x6237;&#x51FD;&#x6570;&#xFF0C;&#x8FD9;&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x533A;&#x522B;&#x662F;&#xFF0C;<code>wait</code>&#x51FD;&#x6570;&#x7B49;&#x5F85;&#x4EFB;&#x610F;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x7ED3;&#x675F;&#x901A;&#x77E5;&#xFF0C;&#x800C;<code>wait_pid</code>&#x51FD;&#x6570;&#x7B49;&#x5F85;&#x8FDB;&#x7A0B;id&#x53F7;&#x4E3A;pid&#x7684;&#x5B50;&#x8FDB;&#x7A0B;&#x7ED3;&#x675F;&#x901A;&#x77E5;&#x3002;&#x8FD9;&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#x6700;&#x7EC8;&#x8BBF;&#x95EE;<code>sys_wait</code>&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x63A5;&#x53E3;&#x8BA9;ucore&#x6765;&#x5B8C;&#x6210;&#x5BF9;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x6700;&#x540E;&#x56DE;&#x6536;&#x5DE5;&#x4F5C;&#xFF0C;&#x5373;&#x56DE;&#x6536;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x5185;&#x6838;&#x6808;&#x548C;&#x8FDB;&#x7A0B;&#x63A7;&#x5236;&#x5757;&#x6240;&#x5360;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#xFF0C;&#x5177;&#x4F53;&#x6D41;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre class="language-"><code class="lang-c"><span class="token comment">// do_wait - wait one OR any children with PROC_ZOMBIE state, and free memory space of kernel stack</span>
+<span class="token comment">//         - proc struct of this child.</span>
+<span class="token comment">// NOTE: only after do_wait function, all resources of the child proces are free.</span>
+<span class="token keyword">int</span>
+<span class="token function">do_wait</span><span class="token punctuation">(</span><span class="token keyword">int</span> pid<span class="token punctuation">,</span> <span class="token keyword">int</span> <span class="token operator">*</span>code_store<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">struct</span> <span class="token class-name">mm_struct</span> <span class="token operator">*</span>mm <span class="token operator">=</span> current<span class="token operator">-&gt;</span>mm<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>code_store <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">user_mem_check</span><span class="token punctuation">(</span>mm<span class="token punctuation">,</span> <span class="token punctuation">(</span>uintptr_t<span class="token punctuation">)</span>code_store<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token operator">-</span>E_INVAL<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">struct</span> <span class="token class-name">proc_struct</span> <span class="token operator">*</span>proc<span class="token punctuation">;</span>
+    bool intr_flag<span class="token punctuation">,</span> haskid<span class="token punctuation">;</span>
+repeat<span class="token operator">:</span>
+    haskid <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>pid <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        proc <span class="token operator">=</span> <span class="token function">find_proc</span><span class="token punctuation">(</span>pid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>proc <span class="token operator">!=</span> <span class="token constant">NULL</span> <span class="token operator">&amp;&amp;</span> proc<span class="token operator">-&gt;</span>parent <span class="token operator">==</span> current<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            haskid <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>proc<span class="token operator">-&gt;</span>state <span class="token operator">==</span> PROC_ZOMBIE<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">goto</span> found<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        proc <span class="token operator">=</span> current<span class="token operator">-&gt;</span>cptr<span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> proc <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span> proc <span class="token operator">=</span> proc<span class="token operator">-&gt;</span>optr<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            haskid <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>proc<span class="token operator">-&gt;</span>state <span class="token operator">==</span> PROC_ZOMBIE<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">goto</span> found<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>haskid<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        current<span class="token operator">-&gt;</span>state <span class="token operator">=</span> PROC_SLEEPING<span class="token punctuation">;</span>
+        current<span class="token operator">-&gt;</span>wait_state <span class="token operator">=</span> WT_CHILD<span class="token punctuation">;</span>
+        <span class="token function">schedule</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>current<span class="token operator">-&gt;</span>flags <span class="token operator">&amp;</span> PF_EXITING<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">do_exit</span><span class="token punctuation">(</span><span class="token operator">-</span>E_KILLED<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">goto</span> repeat<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span>E_BAD_PROC<span class="token punctuation">;</span>
+
+found<span class="token operator">:</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>proc <span class="token operator">==</span> idleproc <span class="token operator">||</span> proc <span class="token operator">==</span> initproc<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">&quot;wait idleproc or initproc.\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>code_store <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token operator">*</span>code_store <span class="token operator">=</span> proc<span class="token operator">-&gt;</span>exit_code<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">local_intr_save</span><span class="token punctuation">(</span>intr_flag<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">unhash_proc</span><span class="token punctuation">(</span>proc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">remove_links</span><span class="token punctuation">(</span>proc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">local_intr_restore</span><span class="token punctuation">(</span>intr_flag<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">put_kstack</span><span class="token punctuation">(</span>proc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">kfree</span><span class="token punctuation">(</span>proc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ol>
+<li>&#x9996;&#x5148;&#x8FDB;&#x884C;&#x68C0;&#x67E5;</li>
+<li>&#x82E5;<code>pid</code>&#x7B49;&#x4E8E;0&#xFF0C;&#x5C31;&#x53BB;&#x627E;&#x5BF9;&#x5E94;&#x7684;&#x5B69;&#x5B50;&#x8FDB;&#x7A0B;&#xFF0C;&#x5426;&#x5219;&#x5C31;&#x4EFB;&#x610F;&#x7684;&#x4E00;&#x4E2A;&#x5FEB;&#x6B7B;&#x7684;&#x5B69;&#x5B50;&#x8FDB;&#x7A0B;&#x3002;&#x5982;&#x679C;&#x6B64;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x6267;&#x884C;&#x72B6;&#x6001;&#x4E0D;&#x4E3A;<code>PROC_ZOMBIE</code>&#xFF0C;&#x8868;&#x660E;&#x6B64;&#x5B50;&#x8FDB;&#x7A0B;&#x8FD8;&#x6CA1;&#x6709;&#x9000;&#x51FA;&#xFF0C;&#x5219;&#x5F53;&#x524D;&#x8FDB;&#x7A0B;&#x53EA; &#x597D;&#x8BBE;&#x7F6E;&#x81EA;&#x5DF1;&#x7684;&#x6267;&#x884C;&#x72B6;&#x6001;&#x4E3A;<code>PROC_SLEEPING</code>&#xFF0C;&#x7761;&#x7720;&#x539F;&#x56E0;&#x4E3A;<code>WT_CHILD</code>&#xFF08;&#x5373;&#x7B49;&#x5F85;&#x5B50;&#x8FDB;&#x7A0B;&#x9000; &#x51FA;&#xFF09;&#xFF0C;&#x8C03;&#x7528;<code>schedule()</code>&#x51FD;&#x6570;&#x9009;&#x62E9;&#x65B0;&#x7684;&#x8FDB;&#x7A0B;&#x6267;&#x884C;&#xFF0C;&#x81EA;&#x5DF1;&#x7761;&#x7720;&#x7B49;&#x5F85;&#xFF0C;&#x5982;&#x679C;&#x88AB;&#x5524;&#x9192;&#xFF0C;&#x5219;&#x91CD;&#x590D;&#x8BE5;&#x6B65;&#x9AA4;&#x6267;&#x884C;&#xFF1B;</li>
+<li>&#x5982;&#x679C;&#x6B64;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x6267;&#x884C;&#x72B6;&#x6001;&#x4E3A;<code>PROC_ZOMBIE</code>&#xFF0C;&#x8868;&#x660E;&#x6B64;&#x5B50;&#x8FDB;&#x7A0B;&#x5904;&#x4E8E;&#x9000;&#x51FA;&#x72B6;&#x6001;&#xFF0C;&#x9700;&#x8981;&#x5F53;&#x524D;&#x8FDB;&#x7A0B; &#xFF08;&#x5373;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x7236;&#x8FDB;&#x7A0B;&#xFF09;&#x5B8C;&#x6210;&#x5BF9;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x6700;&#x7EC8;&#x56DE;&#x6536;&#x5DE5;&#x4F5C;&#xFF0C;&#x5373;&#x9996;&#x5148;&#x628A;&#x5B50;&#x8FDB;&#x7A0B;&#x63A7;&#x5236;&#x5757;&#x4ECE;&#x4E24;&#x4E2A;&#x8FDB;&#x7A0B;&#x961F;&#x5217;<code>proc_list</code>&#x548C;<code>hash_list</code>&#x4E2D;&#x5220;&#x9664;&#xFF0C;&#x5E76;&#x91CA;&#x653E;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x5185;&#x6838;&#x5806;&#x6808;&#x548C;&#x8FDB;&#x7A0B;&#x63A7;&#x5236;&#x5757;&#x3002;&#x81EA;&#x6B64;&#xFF0C;&#x5B50;&#x8FDB;&#x7A0B;&#x624D;&#x5F7B;&#x5E95; &#x5730;&#x7ED3;&#x675F;&#x4E86;&#x5B83;&#x7684;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#xFF0C;&#x6D88;&#x9664;&#x4E86;&#x5B83;&#x6240;&#x5360;&#x7528;&#x7684;&#x6240;&#x6709;&#x8D44;&#x6E90;&#x3002; </li>
+</ol>
+<footer class="page-footer"><span class="copyright">Copyright &#xA9;  2020 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x6700;&#x540E;&#x4FEE;&#x8BA2;&#x4E8E;&#xFF1A;
+2020-08-24 14:37:51
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="系统调用.html" class="navigation navigation-prev " aria-label="Previous page: 系统调用">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="项目组成与执行流.html" class="navigation navigation-next " aria-label="Next page: 项目组成与执行流">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"用户进程的退出和等待","level":"1.8.8","depth":2,"next":{"title":"项目组成与执行流","level":"1.8.9","depth":2,"path":"Lab5/项目组成与执行流.md","ref":"Lab5/项目组成与执行流.md","articles":[]},"previous":{"title":"系统调用","level":"1.8.7","depth":2,"path":"Lab5/系统调用.md","ref":"Lab5/系统调用.md","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-comscore","prism","-highlight","copy-code-button","search-pro","-search","-lunr","expandable-chapters","chapter-fold","splitter","github-buttons","tbfed-pagefooter","baidu-tongji","anchor-navigation-ex","favicon","-sharing","sharing-plus","flexible-alerts","livereload"],"styles":{"website":"./public-repertory/css/gitbook-configure.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy  2020","modify_label":"最后修订于：","modify_format":"YYYY-MM-DD HH:mm:ss"},"chapter-fold":{},"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"shell":"bash"}},"livereload":{},"baidu-tongji":{"url":"https://hm.baidu.com/hm.js","token":"55e7dfe47f4dc1c018d4042fdfa62565"},"splitter":{},"search-pro":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"showLevel":false,"associatedWithSummary":true,"mode":"float","showGoTop":true,"printLog":false,"multipleH1":true,"float":{"floatIcon":"fa fa-navicon","showLevelIcon":false,"level1Icon":"","level2Icon":"","level3Icon":""},"pageTop":{"showLevelIcon":false,"level1Icon":"","level2Icon":"","level3Icon":""}},"favicon":{"shortcut":"asset/img/favicon.ico","bookmark":"asset/img/favicon.ico","appleTouch":"asset/img/favicon.ico","appleTochMore":{"120*120":"asset/img/favicon.ico","180*180":"asset/img/favicon.ico"}},"theme-comscore":{},"github-buttons":{"buttons":[{"user":"nkgongxl","repo":"ucoreonrv","type":"star","count":true,"size":"small"},{"user":"KeLee5453","width":"160","type":"follow","count":true,"size":"small"}]},"flexible-alerts":{"style":"callout","note":{"label":"Note","icon":"fa fa-info-circle","className":"info"},"tip":{"label":"Tip","icon":"fa fa-lightbulb-o","className":"tip"},"warning":{"label":"Warning","icon":"fa fa-exclamation-triangle","className":"warning"},"danger":{"label":"Attention","icon":"fa fa-ban","className":"danger"}},"copy-code-button":{},"sharing":{"qq":true,"all":["douban","facebook","google","instapaper","linkedin","twitter","weibo","messenger","qq","qzone","viber","whatsapp"],"douban":false,"facebook":false,"weibo":true,"twitter":true,"pocket":false,"google":true,"qzone":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"theme":"default","author":"KeLee","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"uCore OS(on RISC-V32)实验指导书","language":"zh-hans","gitbook":"*","description":""},"file":{"path":"Lab5/用户进程的退出和等待.md","mtime":"2020-08-24T06:37:51.789Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-24T07:01:20.111Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-baidu-tongji/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing-plus/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-flexible-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-comscore/test.js"></script>
+        
+    
+
+    </body>
+</html>
+

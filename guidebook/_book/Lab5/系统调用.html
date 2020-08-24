@@ -1,0 +1,1720 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>系统调用 · uCore OS(on RISC-V32)实验指导书</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="KeLee">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-flexible-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-comscore/test.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+
+        
+    
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="用户进程的退出和等待.html" />
+    
+    
+    <link rel="prev" href="创建并执行用户进程.html" />
+    
+
+    
+        <link rel="shortcut icon" href='../asset/img/favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../asset/img/favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="apple-touch-icon" href='../asset/img/favicon.ico'>
+    
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"nkgongxl","repo":"ucoreonrv","type":"star","count":true,"size":"small"},{"user":"KeLee5453","width":"160","type":"follow","count":true,"size":"small"}]};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../Lab0/">
+            
+                <a href="../Lab0/">
+            
+                    
+                    LAB0：ready~go!
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../Lab0/实验目的.html">
+            
+                <a href="../Lab0/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../Lab0/实验内容.html">
+            
+                <a href="../Lab0/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../Lab0/前导知识.html">
+            
+                <a href="../Lab0/前导知识.html">
+            
+                    
+                    前导知识
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.3.1" data-path="../Lab0/前导知识/了解uCore.html">
+            
+                <a href="../Lab0/前导知识/了解uCore.html">
+            
+                    
+                    了解uCore
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.2" data-path="../Lab0/前导知识/了解RISC-V.html">
+            
+                <a href="../Lab0/前导知识/了解RISC-V.html">
+            
+                    
+                    了解RISC-V
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.3" data-path="../Lab0/前导知识/了解OS实验.html">
+            
+                <a href="../Lab0/前导知识/了解OS实验.html">
+            
+                    
+                    了解OS实验
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.4" data-path="../Lab0/前导知识/了解实验环境.html">
+            
+                <a href="../Lab0/前导知识/了解实验环境.html">
+            
+                    
+                    了解实验环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.5" data-path="../Lab0/前导知识/了解开发调试基本工具.html">
+            
+                <a href="../Lab0/前导知识/了解开发调试基本工具.html">
+            
+                    
+                    了解开发调试基本工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.6" data-path="../Lab0/前导知识/了解硬件模拟器.html">
+            
+                <a href="../Lab0/前导知识/了解硬件模拟器.html">
+            
+                    
+                    了解硬件模拟器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../Lab0/配置环境.html">
+            
+                <a href="../Lab0/配置环境.html">
+            
+                    
+                    配置环境
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.4.1" data-path="../Lab0/配置环境/安装虚拟环境.html">
+            
+                <a href="../Lab0/配置环境/安装虚拟环境.html">
+            
+                    
+                    安装虚拟环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.2" data-path="../Lab0/配置环境/安装开发工具.html">
+            
+                <a href="../Lab0/配置环境/安装开发工具.html">
+            
+                    
+                    安装开发工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.3" data-path="../Lab0/配置环境/安装硬件模拟器.html">
+            
+                <a href="../Lab0/配置环境/安装硬件模拟器.html">
+            
+                    
+                    安装硬件模拟器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.4" data-path="../Lab0/配置环境/安装调试工具.html">
+            
+                <a href="../Lab0/配置环境/安装调试工具.html">
+            
+                    
+                    安装调试工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../Lab0.5/">
+            
+                <a href="../Lab0.5/">
+            
+                    
+                    LAB0.5：最小可执行内核
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../Lab0.5/实验目的.html">
+            
+                <a href="../Lab0.5/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../Lab0.5/实验内容.html">
+            
+                <a href="../Lab0.5/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../Lab0.5/练习.html">
+            
+                <a href="../Lab0.5/练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../Lab0.5/内存布局.html">
+            
+                <a href="../Lab0.5/内存布局.html">
+            
+                    
+                    内存布局
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../Lab0.5/链接脚本.html">
+            
+                <a href="../Lab0.5/链接脚本.html">
+            
+                    
+                    链接脚本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../Lab0.5/真正的入口点.html">
+            
+                <a href="../Lab0.5/真正的入口点.html">
+            
+                    
+                    真正的入口点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../Lab0.5/从SBI到stdio.html">
+            
+                <a href="../Lab0.5/从SBI到stdio.html">
+            
+                    
+                    从SBI到stdio
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../Lab0.5/编译运行.html">
+            
+                <a href="../Lab0.5/编译运行.html">
+            
+                    
+                    编译运行
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../Lab0.5/项目组成与执行流.html">
+            
+                <a href="../Lab0.5/项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../Lab1/">
+            
+                <a href="../Lab1/">
+            
+                    
+                    LAB1：中断机制
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../Lab1/实验目的.html">
+            
+                <a href="../Lab1/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../Lab1/实验内容.html">
+            
+                <a href="../Lab1/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../Lab1/练习.html">
+            
+                <a href="../Lab1/练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../Lab1/RISC-V中断相关.html">
+            
+                <a href="../Lab1/RISC-V中断相关.html">
+            
+                    
+                    RISC-V中断相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../Lab1/上下文处理.html">
+            
+                <a href="../Lab1/上下文处理.html">
+            
+                    
+                    上下文处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../Lab1/中断处理程序.html">
+            
+                <a href="../Lab1/中断处理程序.html">
+            
+                    
+                    中断处理程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../Lab1/时钟中断.html">
+            
+                <a href="../Lab1/时钟中断.html">
+            
+                    
+                    时钟中断
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../Lab1/项目组成与执行流.html">
+            
+                <a href="../Lab1/项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../Lab2/">
+            
+                <a href="../Lab2/">
+            
+                    
+                    LAB2：物理内存管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Lab2/实验目的.html">
+            
+                <a href="../Lab2/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../Lab2/实验内容.html">
+            
+                <a href="../Lab2/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../Lab2/练习.html">
+            
+                <a href="../Lab2/练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../Lab2/地址与页表.html">
+            
+                <a href="../Lab2/地址与页表.html">
+            
+                    
+                    地址与页表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../Lab2/物理内存探测.html">
+            
+                <a href="../Lab2/物理内存探测.html">
+            
+                    
+                    物理内存探测
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../Lab2/以页为单位管理物理内存.html">
+            
+                <a href="../Lab2/以页为单位管理物理内存.html">
+            
+                    
+                    以页为单位管理物理内存
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../Lab2/页面分配算法.html">
+            
+                <a href="../Lab2/页面分配算法.html">
+            
+                    
+                    页面分配算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="../Lab2/项目组成与执行流.html">
+            
+                <a href="../Lab2/项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../Lab3/">
+            
+                <a href="../Lab3/">
+            
+                    
+                    LAB3：虚拟内存管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../Lab3/实验目的.html">
+            
+                <a href="../Lab3/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../Lab3/实验内容.html">
+            
+                <a href="../Lab3/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../Lab3/练习.html">
+            
+                <a href="../Lab3/练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../Lab3/页面置换.html">
+            
+                <a href="../Lab3/页面置换.html">
+            
+                    
+                    页面置换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../Lab3/PageFault.html">
+            
+                <a href="../Lab3/PageFault.html">
+            
+                    
+                    PageFault
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.6" data-path="../Lab3/使用多级页表.html">
+            
+                <a href="../Lab3/使用多级页表.html">
+            
+                    
+                    使用多级页表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.7" data-path="../Lab3/页面置换机制.html">
+            
+                <a href="../Lab3/页面置换机制.html">
+            
+                    
+                    页面置换机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.8" data-path="../Lab3/FIFO置换算法.html">
+            
+                <a href="../Lab3/FIFO置换算法.html">
+            
+                    
+                    FIFO置换算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.9" data-path="../Lab3/项目组成与执行流.html">
+            
+                <a href="../Lab3/项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../Lab4/">
+            
+                <a href="../Lab4/">
+            
+                    
+                    LAB4：进程管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../Lab4/实验目的.html">
+            
+                <a href="../Lab4/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../Lab4/实验内容.html">
+            
+                <a href="../Lab4/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../Lab4/练习.html">
+            
+                <a href="../Lab4/练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../Lab4/进程与线程.html">
+            
+                <a href="../Lab4/进程与线程.html">
+            
+                    
+                    进程与线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="../Lab4/相关结构体.html">
+            
+                <a href="../Lab4/相关结构体.html">
+            
+                    
+                    相关结构体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.6" data-path="../Lab4/进程模块初始化.html">
+            
+                <a href="../Lab4/进程模块初始化.html">
+            
+                    
+                    进程模块初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.7" data-path="../Lab4/进程切换.html">
+            
+                <a href="../Lab4/进程切换.html">
+            
+                    
+                    进程切换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.8" data-path="../Lab4/项目组成与执行流.html">
+            
+                <a href="../Lab4/项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    LAB5：用户程序
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="实验目的.html">
+            
+                <a href="实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="实验内容.html">
+            
+                <a href="实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="练习.html">
+            
+                <a href="练习.html">
+            
+                    
+                    练习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="用户进程.html">
+            
+                <a href="用户进程.html">
+            
+                    
+                    用户进程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="用户程序.html">
+            
+                <a href="用户程序.html">
+            
+                    
+                    用户程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="创建并执行用户进程.html">
+            
+                <a href="创建并执行用户进程.html">
+            
+                    
+                    创建并执行用户进程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.8.7" data-path="系统调用.html">
+            
+                <a href="系统调用.html">
+            
+                    
+                    系统调用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" data-path="用户进程的退出和等待.html">
+            
+                <a href="用户进程的退出和等待.html">
+            
+                    
+                    用户进程的退出和等待
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="项目组成与执行流.html">
+            
+                <a href="项目组成与执行流.html">
+            
+                    
+                    项目组成与执行流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../Lab6/">
+            
+                <a href="../Lab6/">
+            
+                    
+                    LAB6
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../Lab6/实验目的.html">
+            
+                <a href="../Lab6/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../Lab6/实验内容.html">
+            
+                <a href="../Lab6/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../Lab7/">
+            
+                <a href="../Lab7/">
+            
+                    
+                    LAB7
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../Lab7/实验目的.html">
+            
+                <a href="../Lab7/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../Lab7/实验内容.html">
+            
+                <a href="../Lab7/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../Lab8/">
+            
+                <a href="../Lab8/">
+            
+                    
+                    LAB8
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../Lab8/实验目的.html">
+            
+                <a href="../Lab8/实验目的.html">
+            
+                    
+                    实验目的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../Lab8/实验内容.html">
+            
+                <a href="../Lab8/实验内容.html">
+            
+                    
+                    实验内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >系统调用</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#&#x7CFB;&#x7EDF;&#x8C03;&#x7528;"><b></b>&#x7CFB;&#x7EDF;&#x8C03;&#x7528;</a></li><ul><li><span class="title-icon "></span><a href="#&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x8F6C;&#x53D1;"><b></b>&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x8F6C;&#x53D1;</a></li><li><span class="title-icon "></span><a href="#doexecve"><b></b>do_execve()</a></li><li><span class="title-icon "></span><a href="#kernelexecve"><b></b>kernel_execve()</a></li></ul></ul></div><a href="#&#x7CFB;&#x7EDF;&#x8C03;&#x7528;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="&#x7CFB;&#x7EDF;&#x8C03;&#x7528;"><a name="&#x7CFB;&#x7EDF;&#x8C03;&#x7528;" class="anchor-navigation-ex-anchor" href="#&#x7CFB;&#x7EDF;&#x8C03;&#x7528;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x7CFB;&#x7EDF;&#x8C03;&#x7528;</h1>
+<p>&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#xFF0C;&#x662F;&#x7528;&#x6237;&#x6001;(U mode)&#x7684;&#x7A0B;&#x5E8F;&#x83B7;&#x53D6;&#x5185;&#x6838;&#x6001;&#xFF08;S mode)&#x670D;&#x52A1;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x5728;&#x7528;&#x6237;&#x6001;&#x548C;&#x5185;&#x6838;&#x6001;&#x90FD;&#x52A0;&#x5165;&#x5BF9;&#x5E94;&#x7684;&#x652F;&#x6301;&#x548C;&#x5904;&#x7406;&#x3002;&#x6211;&#x4EEC;&#x4E5F;&#x53EF;&#x4EE5;&#x8BA4;&#x4E3A;&#x7528;&#x6237;&#x6001;&#x53EA;&#x662F;&#x63D0;&#x4F9B;&#x4E00;&#x4E2A;&#x8C03;&#x7528;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x771F;&#x6B63;&#x7684;&#x5904;&#x7406;&#x90FD;&#x5728;&#x5185;&#x6838;&#x6001;&#x8FDB;&#x884C;&#x3002;</p>
+<h2 id="&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x8F6C;&#x53D1;"><a name="&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x8F6C;&#x53D1;" class="anchor-navigation-ex-anchor" href="#&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x8F6C;&#x53D1;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x8F6C;&#x53D1;</h2>
+<p>&#x9996;&#x5148;&#x6211;&#x4EEC;&#x5728;&#x5934;&#x6587;&#x4EF6;&#x91CC;&#x5B9A;&#x4E49;&#x4E00;&#x4E9B;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7684;&#x7F16;&#x53F7;&#x3002;</p>
+<pre class="language-"><code class="lang-c"><span class="token comment">// libs/unistd.h</span>
+<span class="token macro property">#<span class="token directive keyword">ifndef</span> __LIBS_UNISTD_H__</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> __LIBS_UNISTD_H__</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> T_SYSCALL           0x80</span>
+
+<span class="token comment">/* syscall number */</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SYS_exit            1</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SYS_fork            2</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SYS_wait            3</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SYS_exec            4</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SYS_clone           5</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SYS_yield           10</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SYS_sleep           11</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SYS_kill            12</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SYS_gettime         17</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SYS_getpid          18</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SYS_brk             19</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SYS_mmap            20</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SYS_munmap          21</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SYS_shmem           22</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SYS_putc            30</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SYS_pgdir           31</span>
+
+<span class="token comment">/* SYS_fork flags */</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> CLONE_VM            0x00000100  </span><span class="token comment">// set if VM shared between processes</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> CLONE_THREAD        0x00000200  </span><span class="token comment">// thread group</span>
+
+<span class="token macro property">#<span class="token directive keyword">endif</span> </span><span class="token comment">/* !__LIBS_UNISTD_H__ */</span>
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x6CE8;&#x610F;&#x5728;&#x7528;&#x6237;&#x6001;&#x8FDB;&#x884C;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7684;&#x6838;&#x5FC3;&#x64CD;&#x4F5C;&#x662F;&#xFF0C;&#x901A;&#x8FC7;&#x5185;&#x8054;&#x6C47;&#x7F16;&#x8FDB;&#x884C;<code>ecall</code>&#x73AF;&#x5883;&#x8C03;&#x7528;&#x3002;&#x8FD9;&#x5C06;&#x4EA7;&#x751F;&#x4E00;&#x4E2A;trap, &#x8FDB;&#x5165;S mode&#x8FDB;&#x884C;&#x5F02;&#x5E38;&#x5904;&#x7406;&#x3002;</p>
+<pre class="language-"><code class="lang-c"><span class="token comment">// user/libs/syscall.c</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;defs.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdarg.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;syscall.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">define</span> MAX_ARGS            5</span>
+<span class="token keyword">static</span> <span class="token keyword">inline</span> <span class="token keyword">int</span> <span class="token function">syscall</span><span class="token punctuation">(</span><span class="token keyword">int</span> num<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//va_list, va_start, va_arg&#x90FD;&#x662F;C&#x8BED;&#x8A00;&#x5904;&#x7406;&#x53C2;&#x6570;&#x4E2A;&#x6570;&#x4E0D;&#x5B9A;&#x7684;&#x51FD;&#x6570;&#x7684;&#x5B8F;</span>
+    <span class="token comment">//&#x5728;stdarg.h&#x91CC;&#x5B9A;&#x4E49;</span>
+    va_list ap<span class="token punctuation">;</span> <span class="token comment">//ap: &#x53C2;&#x6570;&#x5217;&#x8868;(&#x6B64;&#x65F6;&#x672A;&#x521D;&#x59CB;&#x5316;)</span>
+    <span class="token function">va_start</span><span class="token punctuation">(</span>ap<span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//&#x521D;&#x59CB;&#x5316;&#x53C2;&#x6570;&#x5217;&#x8868;, &#x4ECE;num&#x5F00;&#x59CB;</span>
+    <span class="token comment">//First, va_start initializes the list of variable arguments as a va_list.</span>
+    uint64_t a<span class="token punctuation">[</span>MAX_ARGS<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> i<span class="token punctuation">,</span> ret<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> MAX_ARGS<span class="token punctuation">;</span> i <span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">//&#x628A;&#x53C2;&#x6570;&#x4F9D;&#x6B21;&#x53D6;&#x51FA;</span>
+           <span class="token comment">/*Subsequent executions of va_arg yield the values of the additional arguments 
+           in the same order as passed to the function.*/</span>
+        a<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">va_arg</span><span class="token punctuation">(</span>ap<span class="token punctuation">,</span> uint64_t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">va_end</span><span class="token punctuation">(</span>ap<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//Finally, va_end shall be executed before the function returns.</span>
+    <span class="token keyword">asm</span> <span class="token keyword">volatile</span> <span class="token punctuation">(</span>
+        <span class="token string">&quot;ld a0, %1\n&quot;</span>
+        <span class="token string">&quot;ld a1, %2\n&quot;</span>
+        <span class="token string">&quot;ld a2, %3\n&quot;</span>
+        <span class="token string">&quot;ld a3, %4\n&quot;</span>
+        <span class="token string">&quot;ld a4, %5\n&quot;</span>
+        <span class="token string">&quot;ld a5, %6\n&quot;</span>
+        <span class="token string">&quot;ecall\n&quot;</span>
+        <span class="token string">&quot;sd a0, %0&quot;</span>
+        <span class="token operator">:</span> <span class="token string">&quot;=m&quot;</span> <span class="token punctuation">(</span>ret<span class="token punctuation">)</span>
+        <span class="token operator">:</span> <span class="token string">&quot;m&quot;</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;m&quot;</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;m&quot;</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;m&quot;</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;m&quot;</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;m&quot;</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token operator">:</span><span class="token string">&quot;memory&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//num&#x5B58;&#x5230;a0&#x5BC4;&#x5B58;&#x5668;&#xFF0C; a[0]&#x5B58;&#x5230;a1&#x5BC4;&#x5B58;&#x5668;</span>
+    <span class="token comment">//ecall&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x5B58;&#x5230;ret</span>
+    <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">sys_exit</span><span class="token punctuation">(</span><span class="token keyword">int</span> error_code<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">syscall</span><span class="token punctuation">(</span>SYS_exit<span class="token punctuation">,</span> error_code<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">sys_fork</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">syscall</span><span class="token punctuation">(</span>SYS_fork<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">sys_wait</span><span class="token punctuation">(</span><span class="token keyword">int</span> pid<span class="token punctuation">,</span> <span class="token keyword">int</span> <span class="token operator">*</span>store<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">syscall</span><span class="token punctuation">(</span>SYS_wait<span class="token punctuation">,</span> pid<span class="token punctuation">,</span> store<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">sys_yield</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">syscall</span><span class="token punctuation">(</span>SYS_yield<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">sys_kill</span><span class="token punctuation">(</span><span class="token keyword">int</span> pid<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">syscall</span><span class="token punctuation">(</span>SYS_kill<span class="token punctuation">,</span> pid<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">sys_getpid</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">syscall</span><span class="token punctuation">(</span>SYS_getpid<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">sys_putc</span><span class="token punctuation">(</span><span class="token keyword">int</span> c<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">syscall</span><span class="token punctuation">(</span>SYS_putc<span class="token punctuation">,</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x4E0B;&#x9762;&#x770B;&#x770B;trap.c&#x662F;&#x5982;&#x4F55;&#x8F6C;&#x53D1;&#x8FD9;&#x4E2A;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7684;&#x3002;</p>
+<pre class="language-"><code class="lang-c"><span class="token comment">// kern/trap/trap.c</span>
+<span class="token keyword">void</span> <span class="token function">exception_handler</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">trapframe</span> <span class="token operator">*</span>tf<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> ret<span class="token punctuation">;</span>
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span>tf<span class="token operator">-&gt;</span>cause<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">//&#x901A;&#x8FC7;&#x4E2D;&#x65AD;&#x5E27;&#x91CC; scause&#x5BC4;&#x5B58;&#x5668;&#x7684;&#x6570;&#x503C;&#xFF0C;&#x5224;&#x65AD;&#x51FA;&#x5F53;&#x524D;&#x662F;&#x6765;&#x81EA;USER_ECALL&#x7684;&#x5F02;&#x5E38;</span>
+        <span class="token keyword">case</span> CAUSE_USER_ECALL<span class="token operator">:</span>
+            <span class="token comment">//cprintf(&quot;Environment call from U-mode\n&quot;);</span>
+            tf<span class="token operator">-&gt;</span>epc <span class="token operator">+=</span> <span class="token number">4</span><span class="token punctuation">;</span> 
+            <span class="token comment">//sepc&#x5BC4;&#x5B58;&#x5668;&#x662F;&#x4EA7;&#x751F;&#x5F02;&#x5E38;&#x7684;&#x6307;&#x4EE4;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5728;&#x5F02;&#x5E38;&#x5904;&#x7406;&#x7ED3;&#x675F;&#x540E;&#xFF0C;&#x4F1A;&#x56DE;&#x5230;sepc&#x7684;&#x4F4D;&#x7F6E;&#x7EE7;&#x7EED;&#x6267;&#x884C;</span>
+            <span class="token comment">//&#x5BF9;&#x4E8E;ecall, &#x6211;&#x4EEC;&#x5E0C;&#x671B;sepc&#x5BC4;&#x5B58;&#x5668;&#x8981;&#x6307;&#x5411;&#x4EA7;&#x751F;&#x5F02;&#x5E38;&#x7684;&#x6307;&#x4EE4;(ecall)&#x7684;&#x4E0B;&#x4E00;&#x6761;&#x6307;&#x4EE4;</span>
+            <span class="token comment">//&#x5426;&#x5219;&#x5C31;&#x4F1A;&#x56DE;&#x5230;ecall&#x6267;&#x884C;&#x518D;&#x6267;&#x884C;&#x4E00;&#x6B21;ecall, &#x65E0;&#x9650;&#x5FAA;&#x73AF;</span>
+            <span class="token function">syscall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// &#x8FDB;&#x884C;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x5904;&#x7406;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token comment">/*other cases .... */</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// kern/syscall/syscall.c</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;proc.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;syscall.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;trap.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;pmm.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;assert.h&gt;</span></span>
+<span class="token comment">//&#x8FD9;&#x91CC;&#x628A;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x8FDB;&#x4E00;&#x6B65;&#x8F6C;&#x53D1;&#x7ED9;proc.c&#x7684;do_exit(), do_fork()&#x7B49;&#x51FD;&#x6570;</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">sys_exit</span><span class="token punctuation">(</span>uint64_t arg<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> error_code <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>arg<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">do_exit</span><span class="token punctuation">(</span>error_code<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">sys_fork</span><span class="token punctuation">(</span>uint64_t arg<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">struct</span> <span class="token class-name">trapframe</span> <span class="token operator">*</span>tf <span class="token operator">=</span> current<span class="token operator">-&gt;</span>tf<span class="token punctuation">;</span>
+    uintptr_t stack <span class="token operator">=</span> tf<span class="token operator">-&gt;</span>gpr<span class="token punctuation">.</span>sp<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">do_fork</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> stack<span class="token punctuation">,</span> tf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">sys_wait</span><span class="token punctuation">(</span>uint64_t arg<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> pid <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>arg<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> <span class="token operator">*</span>store <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span><span class="token punctuation">)</span>arg<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">do_wait</span><span class="token punctuation">(</span>pid<span class="token punctuation">,</span> store<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">sys_exec</span><span class="token punctuation">(</span>uint64_t arg<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>name <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>arg<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    size_t len <span class="token operator">=</span> <span class="token punctuation">(</span>size_t<span class="token punctuation">)</span>arg<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">char</span> <span class="token operator">*</span>binary <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>arg<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    size_t size <span class="token operator">=</span> <span class="token punctuation">(</span>size_t<span class="token punctuation">)</span>arg<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token comment">//&#x7528;&#x6237;&#x6001;&#x8C03;&#x7528;&#x7684;exec(), &#x5F52;&#x6839;&#x7ED3;&#x5E95;&#x662F;do_execve()</span>
+    <span class="token keyword">return</span> <span class="token function">do_execve</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> len<span class="token punctuation">,</span> binary<span class="token punctuation">,</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">sys_yield</span><span class="token punctuation">(</span>uint64_t arg<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">do_yield</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">sys_kill</span><span class="token punctuation">(</span>uint64_t arg<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> pid <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>arg<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">do_kill</span><span class="token punctuation">(</span>pid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">sys_getpid</span><span class="token punctuation">(</span>uint64_t arg<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> current<span class="token operator">-&gt;</span>pid<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">sys_putc</span><span class="token punctuation">(</span>uint64_t arg<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> c <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>arg<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">cputchar</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//&#x8FD9;&#x91CC;&#x5B9A;&#x4E49;&#x4E86;&#x51FD;&#x6570;&#x6307;&#x9488;&#x7684;&#x6570;&#x7EC4;syscalls, &#x628A;&#x6BCF;&#x4E2A;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7F16;&#x53F7;&#x7684;&#x4E0B;&#x6807;&#x4E0A;&#x521D;&#x59CB;&#x5316;&#x4E3A;&#x5BF9;&#x5E94;&#x7684;&#x51FD;&#x6570;&#x6307;&#x9488;</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>syscalls<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">(</span>uint64_t arg<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">[</span>SYS_exit<span class="token punctuation">]</span>              sys_exit<span class="token punctuation">,</span>
+    <span class="token punctuation">[</span>SYS_fork<span class="token punctuation">]</span>              sys_fork<span class="token punctuation">,</span>
+    <span class="token punctuation">[</span>SYS_wait<span class="token punctuation">]</span>              sys_wait<span class="token punctuation">,</span>
+    <span class="token punctuation">[</span>SYS_exec<span class="token punctuation">]</span>              sys_exec<span class="token punctuation">,</span>
+    <span class="token punctuation">[</span>SYS_yield<span class="token punctuation">]</span>             sys_yield<span class="token punctuation">,</span>
+    <span class="token punctuation">[</span>SYS_kill<span class="token punctuation">]</span>              sys_kill<span class="token punctuation">,</span>
+    <span class="token punctuation">[</span>SYS_getpid<span class="token punctuation">]</span>            sys_getpid<span class="token punctuation">,</span>
+    <span class="token punctuation">[</span>SYS_putc<span class="token punctuation">]</span>              sys_putc<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> NUM_SYSCALLS        ((sizeof(syscalls)) / (sizeof(syscalls[0])))</span>
+
+<span class="token keyword">void</span> <span class="token function">syscall</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">struct</span> <span class="token class-name">trapframe</span> <span class="token operator">*</span>tf <span class="token operator">=</span> current<span class="token operator">-&gt;</span>tf<span class="token punctuation">;</span>
+    uint64_t arg<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> num <span class="token operator">=</span> tf<span class="token operator">-&gt;</span>gpr<span class="token punctuation">.</span>a0<span class="token punctuation">;</span><span class="token comment">//a0&#x5BC4;&#x5B58;&#x5668;&#x4FDD;&#x5B58;&#x4E86;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7F16;&#x53F7;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>num <span class="token operator">&gt;=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> num <span class="token operator">&lt;</span> NUM_SYSCALLS<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment">//&#x9632;&#x6B62;syscalls[num]&#x4E0B;&#x6807;&#x8D8A;&#x754C;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>syscalls<span class="token punctuation">[</span>num<span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            arg<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> tf<span class="token operator">-&gt;</span>gpr<span class="token punctuation">.</span>a1<span class="token punctuation">;</span>
+            arg<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> tf<span class="token operator">-&gt;</span>gpr<span class="token punctuation">.</span>a2<span class="token punctuation">;</span>
+            arg<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> tf<span class="token operator">-&gt;</span>gpr<span class="token punctuation">.</span>a3<span class="token punctuation">;</span>
+            arg<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> tf<span class="token operator">-&gt;</span>gpr<span class="token punctuation">.</span>a4<span class="token punctuation">;</span>
+            arg<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">=</span> tf<span class="token operator">-&gt;</span>gpr<span class="token punctuation">.</span>a5<span class="token punctuation">;</span>
+            tf<span class="token operator">-&gt;</span>gpr<span class="token punctuation">.</span>a0 <span class="token operator">=</span> syscalls<span class="token punctuation">[</span>num<span class="token punctuation">]</span><span class="token punctuation">(</span>arg<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+            <span class="token comment">//&#x628A;&#x5BC4;&#x5B58;&#x5668;&#x91CC;&#x7684;&#x53C2;&#x6570;&#x53D6;&#x51FA;&#x6765;&#xFF0C;&#x8F6C;&#x53D1;&#x7ED9;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7F16;&#x53F7;&#x5BF9;&#x5E94;&#x7684;&#x51FD;&#x6570;&#x8FDB;&#x884C;&#x5904;&#x7406;</span>
+            <span class="token keyword">return</span> <span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">//&#x5982;&#x679C;&#x6267;&#x884C;&#x5230;&#x8FD9;&#x91CC;&#xFF0C;&#x8BF4;&#x660E;&#x4F20;&#x5165;&#x7684;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7F16;&#x53F7;&#x8FD8;&#x6CA1;&#x6709;&#x88AB;&#x5B9E;&#x73B0;&#xFF0C;&#x5C31;&#x5D29;&#x6389;&#x4E86;&#x3002;</span>
+    <span class="token function">print_trapframe</span><span class="token punctuation">(</span>tf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">&quot;undefined syscall %d, pid = %d, name = %s.\n&quot;</span><span class="token punctuation">,</span>
+            num<span class="token punctuation">,</span> current<span class="token operator">-&gt;</span>pid<span class="token punctuation">,</span> current<span class="token operator">-&gt;</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x5C31;&#x5B8C;&#x6210;&#x4E86;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7684;&#x8F6C;&#x53D1;&#x3002;&#x63A5;&#x4E0B;&#x6765;&#x5C31;&#x662F;&#x5728;<code>do_exit(), do_execve()</code>&#x7B49;&#x51FD;&#x6570;&#x4E2D;&#x8FDB;&#x884C;&#x5177;&#x4F53;&#x5904;&#x7406;&#x4E86;&#x3002;</p>
+<h2 id="doexecve"><a name="doexecve" class="anchor-navigation-ex-anchor" href="#doexecve"><i class="fa fa-link" aria-hidden="true"></i></a><code>do_execve()</code></h2>
+<p>&#x6211;&#x4EEC;&#x770B;&#x770B;<code>do_execve()</code>&#x51FD;&#x6570;</p>
+<pre class="language-"><code class="lang-c"><span class="token comment">// kern/mm/vmm.c</span>
+bool <span class="token function">user_mem_check</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">mm_struct</span> <span class="token operator">*</span>mm<span class="token punctuation">,</span> uintptr_t addr<span class="token punctuation">,</span> size_t len<span class="token punctuation">,</span> bool write<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//&#x68C0;&#x67E5;&#x4ECE;addr&#x5F00;&#x59CB;&#x957F;&#x4E3A;len&#x7684;&#x4E00;&#x6BB5;&#x5185;&#x5B58;&#x80FD;&#x5426;&#x88AB;&#x7528;&#x6237;&#x6001;&#x7A0B;&#x5E8F;&#x8BBF;&#x95EE;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>mm <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">USER_ACCESS</span><span class="token punctuation">(</span>addr<span class="token punctuation">,</span> addr <span class="token operator">+</span> len<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">struct</span> <span class="token class-name">vma_struct</span> <span class="token operator">*</span>vma<span class="token punctuation">;</span>
+        uintptr_t start <span class="token operator">=</span> addr<span class="token punctuation">,</span> end <span class="token operator">=</span> addr <span class="token operator">+</span> len<span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>start <span class="token operator">&lt;</span> end<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>vma <span class="token operator">=</span> <span class="token function">find_vma</span><span class="token punctuation">(</span>mm<span class="token punctuation">,</span> start<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token constant">NULL</span> <span class="token operator">||</span> start <span class="token operator">&lt;</span> vma<span class="token operator">-&gt;</span>vm_start<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>vma<span class="token operator">-&gt;</span>vm_flags <span class="token operator">&amp;</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>write<span class="token punctuation">)</span> <span class="token operator">?</span> VM_WRITE <span class="token operator">:</span> VM_READ<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>write <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>vma<span class="token operator">-&gt;</span>vm_flags <span class="token operator">&amp;</span> VM_STACK<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>start <span class="token operator">&lt;</span> vma<span class="token operator">-&gt;</span>vm_start <span class="token operator">+</span> PGSIZE<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">//check stack start &amp; size</span>
+                    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+            start <span class="token operator">=</span> vma<span class="token operator">-&gt;</span>vm_end<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token function">KERN_ACCESS</span><span class="token punctuation">(</span>addr<span class="token punctuation">,</span> addr <span class="token operator">+</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// kern/process/proc.c</span>
+<span class="token comment">// do_execve - call exit_mmap(mm)&amp;put_pgdir(mm) to reclaim memory space of current process</span>
+<span class="token comment">//           - call load_icode to setup new memory space accroding binary prog.</span>
+<span class="token keyword">int</span> <span class="token function">do_execve</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>name<span class="token punctuation">,</span> size_t len<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span> <span class="token operator">*</span>binary<span class="token punctuation">,</span> size_t size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">struct</span> <span class="token class-name">mm_struct</span> <span class="token operator">*</span>mm <span class="token operator">=</span> current<span class="token operator">-&gt;</span>mm<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">user_mem_check</span><span class="token punctuation">(</span>mm<span class="token punctuation">,</span> <span class="token punctuation">(</span>uintptr_t<span class="token punctuation">)</span>name<span class="token punctuation">,</span> len<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">//&#x68C0;&#x67E5;name&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x80FD;&#x5426;&#x88AB;&#x8BBF;&#x95EE;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span>E_INVAL<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>len <span class="token operator">&gt;</span> PROC_NAME_LEN<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">//&#x8FDB;&#x7A0B;&#x540D;&#x5B57;&#x7684;&#x957F;&#x5EA6;&#x6709;&#x4E0A;&#x9650; PROC_NAME_LEN&#xFF0C;&#x5728;proc.h&#x5B9A;&#x4E49;</span>
+        len <span class="token operator">=</span> PROC_NAME_LEN<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">char</span> local_name<span class="token punctuation">[</span>PROC_NAME_LEN <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">memset</span><span class="token punctuation">(</span>local_name<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>local_name<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">memcpy</span><span class="token punctuation">(</span>local_name<span class="token punctuation">,</span> name<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>mm <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">cputs</span><span class="token punctuation">(</span><span class="token string">&quot;mm != NULL&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">lcr3</span><span class="token punctuation">(</span>boot_cr3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">mm_count_dec</span><span class="token punctuation">(</span>mm<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">exit_mmap</span><span class="token punctuation">(</span>mm<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">put_pgdir</span><span class="token punctuation">(</span>mm<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">mm_destroy</span><span class="token punctuation">(</span>mm<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//&#x628A;&#x8FDB;&#x7A0B;&#x5F53;&#x524D;&#x5360;&#x7528;&#x7684;&#x5185;&#x5B58;&#x91CA;&#x653E;&#xFF0C;&#x4E4B;&#x540E;&#x91CD;&#x65B0;&#x5206;&#x914D;&#x5185;&#x5B58;</span>
+        <span class="token punctuation">}</span>
+        current<span class="token operator">-&gt;</span>mm <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">//&#x628A;&#x65B0;&#x7684;&#x7A0B;&#x5E8F;&#x52A0;&#x8F7D;&#x5230;&#x5F53;&#x524D;&#x8FDB;&#x7A0B;&#x91CC;&#x7684;&#x5DE5;&#x4F5C;&#x90FD;&#x5728;load_icode()&#x51FD;&#x6570;&#x91CC;&#x5B8C;&#x6210;</span>
+    <span class="token keyword">int</span> ret<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>ret <span class="token operator">=</span> <span class="token function">load_icode</span><span class="token punctuation">(</span>binary<span class="token punctuation">,</span> size<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">goto</span> execve_exit<span class="token punctuation">;</span><span class="token comment">//&#x8FD4;&#x56DE;&#x4E0D;&#x4E3A;0&#xFF0C;&#x5219;&#x52A0;&#x8F7D;&#x5931;&#x8D25;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">set_proc_name</span><span class="token punctuation">(</span>current<span class="token punctuation">,</span> local_name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//&#x5982;&#x679C;set_proc_name&#x7684;&#x5B9E;&#x73B0;&#x4E0D;&#x53D8;, &#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x80FD;&#x76F4;&#x63A5;set_proc_name(current, name)?</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+execve_exit<span class="token operator">:</span>
+    <span class="token function">do_exit</span><span class="token punctuation">(</span>ret<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">&quot;already exit: %e.\n&quot;</span><span class="token punctuation">,</span> ret<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="kernelexecve"><a name="kernelexecve" class="anchor-navigation-ex-anchor" href="#kernelexecve"><i class="fa fa-link" aria-hidden="true"></i></a><code>kernel_execve()</code></h2>
+<p>&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x5982;&#x4F55;&#x5B9E;&#x73B0;<code>kernel_execve()</code>&#x51FD;&#x6570;&#xFF1F;</p>
+<p>&#x80FD;&#x5426;&#x76F4;&#x63A5;&#x8C03;&#x7528;<code>do_execve()</code>?</p>
+<pre class="language-"><code class="lang-c"><span class="token comment">// kern/process/proc.c</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">kernel_execve</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>name<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span> <span class="token operator">*</span>binary<span class="token punctuation">,</span> size_t size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    int64_t ret<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> len <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ret <span class="token operator">=</span> <span class="token function">do_execve</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> len<span class="token punctuation">,</span> binary<span class="token punctuation">,</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">cprintf</span><span class="token punctuation">(</span><span class="token string">&quot;ret = %d\n&quot;</span><span class="token punctuation">,</span> ret<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>&#x5F88;&#x4E0D;&#x5E78;&#x3002;&#x8FD9;&#x4E48;&#x505A;&#x884C;&#x4E0D;&#x901A;&#x3002;<code>do_execve()</code> <code>load_icode()</code>&#x91CC;&#x9762;&#x53EA;&#x662F;&#x6784;&#x5EFA;&#x4E86;&#x7528;&#x6237;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x7684;&#x4E0A;&#x4E0B;&#x6587;&#xFF0C;&#x4F46;&#x662F;&#x5E76;&#x6CA1;&#x6709;&#x5B8C;&#x6210;&#x5207;&#x6362;&#x3002;&#x4E0A;&#x4E0B;&#x6587;&#x5207;&#x6362;&#x5B9E;&#x9645;&#x4E0A;&#x8981;&#x501F;&#x52A9;&#x4E2D;&#x65AD;&#x5904;&#x7406;&#x7684;&#x8FD4;&#x56DE;&#x6765;&#x5B8C;&#x6210;&#x3002;&#x76F4;&#x63A5;&#x8C03;&#x7528;<code>do_execve()</code>&#x662F;&#x65E0;&#x6CD5;&#x5B8C;&#x6210;&#x4E0A;&#x4E0B;&#x6587;&#x5207;&#x6362;&#x7684;&#x3002;&#x5982;&#x679C;&#x662F;&#x5728;&#x7528;&#x6237;&#x6001;&#x8C03;&#x7528;<code>exec()</code>, &#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7684;<code>ecall</code>&#x4EA7;&#x751F;&#x7684;&#x4E2D;&#x65AD;&#x8FD4;&#x56DE;&#x65F6;&#xFF0C; &#x5C31;&#x53EF;&#x4EE5;&#x5B8C;&#x6210;&#x4E0A;&#x4E0B;&#x6587;&#x5207;&#x6362;&#x3002;</p>
+<p>&#x7531;&#x4E8E;&#x76EE;&#x524D;&#x6211;&#x4EEC;&#x5728;S mode&#x4E0B;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x80FD;&#x901A;&#x8FC7;<code>ecall</code>&#x6765;&#x4EA7;&#x751F;&#x4E2D;&#x65AD;&#x3002;&#x6211;&#x4EEC;&#x8FD9;&#x91CC;&#x91C7;&#x53D6;&#x4E00;&#x4E2A;&#x53D6;&#x5DE7;&#x7684;&#x529E;&#x6CD5;&#xFF0C;&#x7528;<code>ebreak</code>&#x4EA7;&#x751F;&#x65AD;&#x70B9;&#x4E2D;&#x65AD;&#x8FDB;&#x884C;&#x5904;&#x7406;&#xFF0C;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;<code>a7</code>&#x5BC4;&#x5B58;&#x5668;&#x7684;&#x503C;&#x4E3A;10&#x8BF4;&#x660E;&#x8FD9;&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x666E;&#x901A;&#x7684;&#x65AD;&#x70B9;&#x4E2D;&#x65AD;&#xFF0C;&#x800C;&#x662F;&#x8981;&#x8F6C;&#x53D1;&#x5230;<code>syscall()</code>, &#x8FD9;&#x6837;&#x7528;&#x4E00;&#x4E2A;&#x4E0D;&#x662F;&#x7279;&#x522B;&#x4F18;&#x96C5;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;&#x5728;&#x5185;&#x6838;&#x6001;&#x4F7F;&#x7528;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x3002;</p>
+<pre class="language-"><code class="lang-c"><span class="token comment">// kern/process/proc.c</span>
+<span class="token comment">// kernel_execve - do SYS_exec syscall to exec a user program called by user_main kernel_thread</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">kernel_execve</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>name<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span> <span class="token operator">*</span>binary<span class="token punctuation">,</span> size_t size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    int64_t ret<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> len <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">asm</span> <span class="token keyword">volatile</span><span class="token punctuation">(</span>
+        <span class="token string">&quot;li a0, %1\n&quot;</span>
+        <span class="token string">&quot;lw a1, %2\n&quot;</span>
+        <span class="token string">&quot;lw a2, %3\n&quot;</span>
+        <span class="token string">&quot;lw a3, %4\n&quot;</span>
+        <span class="token string">&quot;lw a4, %5\n&quot;</span>
+        <span class="token string">&quot;li a7, 10\n&quot;</span>
+        <span class="token string">&quot;ebreak\n&quot;</span>
+        <span class="token string">&quot;sw a0, %0\n&quot;</span>
+        <span class="token operator">:</span> <span class="token string">&quot;=m&quot;</span><span class="token punctuation">(</span>ret<span class="token punctuation">)</span>
+        <span class="token operator">:</span> <span class="token string">&quot;i&quot;</span><span class="token punctuation">(</span>SYS_exec<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;m&quot;</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;m&quot;</span><span class="token punctuation">(</span>len<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;m&quot;</span><span class="token punctuation">(</span>binary<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;m&quot;</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span>
+        <span class="token operator">:</span> <span class="token string">&quot;memory&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//&#x8FD9;&#x91CC;&#x5185;&#x8054;&#x6C47;&#x7F16;&#x7684;&#x683C;&#x5F0F;&#xFF0C;&#x548C;&#x7528;&#x6237;&#x6001;&#x8C03;&#x7528;ecall&#x7684;&#x683C;&#x5F0F;&#x7C7B;&#x4F3C;&#xFF0C;&#x53EA;&#x662F;ecall&#x6362;&#x6210;&#x4E86;ebreak</span>
+    <span class="token function">cprintf</span><span class="token punctuation">(</span><span class="token string">&quot;ret = %d\n&quot;</span><span class="token punctuation">,</span> ret<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// kern/trap/trap.c</span>
+<span class="token keyword">void</span> <span class="token function">exception_handler</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">trapframe</span> <span class="token operator">*</span>tf<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> ret<span class="token punctuation">;</span>
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span>tf<span class="token operator">-&gt;</span>cause<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">case</span> CAUSE_BREAKPOINT<span class="token operator">:</span>
+            <span class="token function">cprintf</span><span class="token punctuation">(</span><span class="token string">&quot;Breakpoint\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>tf<span class="token operator">-&gt;</span>gpr<span class="token punctuation">.</span>a7 <span class="token operator">==</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                tf<span class="token operator">-&gt;</span>epc <span class="token operator">+=</span> <span class="token number">4</span><span class="token punctuation">;</span> <span class="token comment">//&#x6CE8;&#x610F;&#x8FD4;&#x56DE;&#x65F6;&#x8981;&#x6267;&#x884C;ebreak&#x7684;&#x4E0B;&#x4E00;&#x6761;&#x6307;&#x4EE4;</span>
+                <span class="token function">syscall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+          <span class="token comment">/* other cases ... */</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>&#x6CE8;&#x610F;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x8BA9;CPU&#x8FDB;&#x5165;U mode&#x6267;&#x884C;<code>do_execve()</code>&#x52A0;&#x8F7D;&#x7684;&#x7528;&#x6237;&#x7A0B;&#x5E8F;&#x3002;&#x8FDB;&#x884C;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;<code>sys_exec</code>&#x4E4B;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x5728;trap&#x8FD4;&#x56DE;&#x7684;&#x65F6;&#x5019;&#x8C03;&#x7528;&#x4E86;<code>sret</code>&#x6307;&#x4EE4;&#xFF0C;&#x8FD9;&#x65F6;&#x53EA;&#x8981;<code>sstatus</code>&#x5BC4;&#x5B58;&#x5668;&#x7684;<code>SPP</code>&#x4E8C;&#x8FDB;&#x5236;&#x4F4D;&#x4E3A;0&#xFF0C;&#x5C31;&#x4F1A;&#x5207;&#x6362;&#x5230;U mode&#xFF0C;&#x4F46;<code>SPP</code>&#x5B58;&#x50A8;&#x7684;&#x662F;&#x201C;&#x8FDB;&#x5165;trap&#x4E4B;&#x524D;&#x6765;&#x81EA;&#x4EC0;&#x4E48;&#x7279;&#x6743;&#x7EA7;&#x201D;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x6211;&#x4EEC;&#x8FD9;&#x91CC;ebreak&#x4E4B;&#x540E;<code>SPP</code>&#x7684;&#x6570;&#x503C;&#x4E3A;1&#xFF0C;sret&#x4E4B;&#x540E;&#x4F1A;&#x56DE;&#x5230;S mode&#x5728;&#x5185;&#x6838;&#x6001;&#x6267;&#x884C;&#x7528;&#x6237;&#x7A0B;&#x5E8F;&#x3002;&#x6240;&#x4EE5;<code>load_icode()</code>&#x51FD;&#x6570;&#x5728;&#x6784;&#x9020;&#x65B0;&#x8FDB;&#x7A0B;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4F1A;&#x628A;<code>SSTATUS_SPP</code>&#x8BBE;&#x7F6E;&#x4E3A;0&#xFF0C;&#x4F7F;&#x5F97;<code>sret</code>&#x7684;&#x65F6;&#x5019;&#x80FD;&#x56DE;&#x5230;U mode&#x3002; </p>
+<footer class="page-footer"><span class="copyright">Copyright &#xA9;  2020 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x6700;&#x540E;&#x4FEE;&#x8BA2;&#x4E8E;&#xFF1A;
+2020-08-24 14:31:06
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="创建并执行用户进程.html" class="navigation navigation-prev " aria-label="Previous page: 创建并执行用户进程">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="用户进程的退出和等待.html" class="navigation navigation-next " aria-label="Next page: 用户进程的退出和等待">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"系统调用","level":"1.8.7","depth":2,"next":{"title":"用户进程的退出和等待","level":"1.8.8","depth":2,"path":"Lab5/用户进程的退出和等待.md","ref":"Lab5/用户进程的退出和等待.md","articles":[]},"previous":{"title":"创建并执行用户进程","level":"1.8.6","depth":2,"path":"Lab5/创建并执行用户进程.md","ref":"Lab5/创建并执行用户进程.md","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-comscore","prism","-highlight","copy-code-button","search-pro","-search","-lunr","expandable-chapters","chapter-fold","splitter","github-buttons","tbfed-pagefooter","baidu-tongji","anchor-navigation-ex","favicon","-sharing","sharing-plus","flexible-alerts","livereload"],"styles":{"website":"./public-repertory/css/gitbook-configure.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy  2020","modify_label":"最后修订于：","modify_format":"YYYY-MM-DD HH:mm:ss"},"chapter-fold":{},"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"shell":"bash"}},"livereload":{},"baidu-tongji":{"url":"https://hm.baidu.com/hm.js","token":"55e7dfe47f4dc1c018d4042fdfa62565"},"splitter":{},"search-pro":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"showLevel":false,"associatedWithSummary":true,"mode":"float","showGoTop":true,"printLog":false,"multipleH1":true,"float":{"floatIcon":"fa fa-navicon","showLevelIcon":false,"level1Icon":"","level2Icon":"","level3Icon":""},"pageTop":{"showLevelIcon":false,"level1Icon":"","level2Icon":"","level3Icon":""}},"favicon":{"shortcut":"asset/img/favicon.ico","bookmark":"asset/img/favicon.ico","appleTouch":"asset/img/favicon.ico","appleTochMore":{"120*120":"asset/img/favicon.ico","180*180":"asset/img/favicon.ico"}},"theme-comscore":{},"github-buttons":{"buttons":[{"user":"nkgongxl","repo":"ucoreonrv","type":"star","count":true,"size":"small"},{"user":"KeLee5453","width":"160","type":"follow","count":true,"size":"small"}]},"flexible-alerts":{"style":"callout","note":{"label":"Note","icon":"fa fa-info-circle","className":"info"},"tip":{"label":"Tip","icon":"fa fa-lightbulb-o","className":"tip"},"warning":{"label":"Warning","icon":"fa fa-exclamation-triangle","className":"warning"},"danger":{"label":"Attention","icon":"fa fa-ban","className":"danger"}},"copy-code-button":{},"sharing":{"qq":true,"all":["douban","facebook","google","instapaper","linkedin","twitter","weibo","messenger","qq","qzone","viber","whatsapp"],"douban":false,"facebook":false,"weibo":true,"twitter":true,"pocket":false,"google":true,"qzone":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"theme":"default","author":"KeLee","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"uCore OS(on RISC-V32)实验指导书","language":"zh-hans","gitbook":"*","description":""},"file":{"path":"Lab5/系统调用.md","mtime":"2020-08-24T06:31:06.712Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-08-24T07:01:20.111Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-baidu-tongji/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing-plus/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-flexible-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-comscore/test.js"></script>
+        
+    
+
+    </body>
+</html>
+
