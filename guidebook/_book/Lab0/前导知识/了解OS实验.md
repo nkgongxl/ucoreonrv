@@ -17,7 +17,7 @@
 
 其中每个开发步骤都是建立在上一个步骤之上的，就像搭积木，从一个一个小木块，最终搭出来一个小房子。在搭房子的过程中，完成从理解操作系统原理到实践操作系统设计与实现的探索过程。这个房子最终的建筑架构和建设进度如下图所示：
 
-![ucore系统结构图](https://github.com/nkgongxl/ucoreonrv/blob/master/picture/%E6%8C%87%E5%AF%BC%E4%B9%A6/image001.png)
+![ucore系统结构图](https://chyyuu.gitbooks.io/ucore_os_docs/content/lab0_figs/image001.png)
 
 ## 开发OS实验的步骤
 
